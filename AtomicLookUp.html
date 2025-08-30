@@ -1,0 +1,1640 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Atomic Lookup — Detailed Element Profiles</title>
+<link rel="icon" href="data:,">
+<style>
+  :root{
+    --bg1:#0f1724; --bg2:#071032; --card:#0b1220; --accent:#06b6d4; --accent2:#7c3aed;
+    --muted:#9aa4b2; --glass: rgba(255,255,255,0.03);
+    --maxw:1100px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg,var(--bg1),var(--bg2)); color:#e6eef6; min-height:100vh; display:flex; align-items:flex-start; justify-content:center;
+    padding:28px;
+  }
+  .wrap{width:100%; max-width:var(--maxw)}
+  header{display:flex; gap:16px; align-items:center}
+  h1{margin:0; font-size:22px}
+  p.lead{margin:6px 0 0; color:var(--muted)}
+  .controls{display:flex; gap:8px; margin-top:16px; align-items:center; flex-wrap:wrap}
+  input[type=number]{padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.04); background:rgba(255,255,255,0.02); color:inherit; width:160px}
+  button{padding:10px 14px; border-radius:10px; border:0; background:var(--accent2); color:white; font-weight:700; cursor:pointer}
+  button.ghost{background:transparent; border:1px solid rgba(255,255,255,0.06)}
+  main{display:grid; grid-template-columns: 1fr 360px; gap:18px; margin-top:18px}
+  @media (max-width:980px){ main{grid-template-columns:1fr} }
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,0.02)}
+  .resultHeader{display:flex; gap:12px; align-items:center}
+  .sym{font-size:48px; font-weight:900; width:100px; text-align:center}
+  .meta{flex:1}
+  .meta h2{margin:0; font-size:20px}
+  .muted{color:var(--muted)}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+  .sectionTitle{font-weight:800; margin-bottom:8px}
+  table{width:100%; border-collapse:collapse; font-size:14px}
+  td, th{padding:6px 8px; vertical-align:top}
+  th{color:var(--muted); text-align:left; width:40%}
+  .note{font-size:13px; color:var(--muted)}
+  pre{background:rgba(255,255,255,0.02); padding:10px; border-radius:8px; overflow:auto}
+  footer{margin-top:14px; color:var(--muted); font-size:13px}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div style="width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:800">PT</div>
+      <div>
+        <h1>Atomic Lookup — Detailed Element Profiles</h1>
+        <p class="lead">Enter an atomic number to view identification, physical & chemical properties, uses, safety, history and fun facts — useful for students & lab assistants.</p>
+      </div>
+    </header>
+
+    <div class="controls">
+      <input id="atomicNumber" type="number" min="1" max="118" placeholder="Atomic number (e.g., 8)" />
+      <button id="lookup">Lookup</button>
+      <button id="random" class="ghost">Random</button>
+      <button id="reset" class="ghost">Reset</button>
+      <div style="margin-left:auto" class="note">Dataset included for all 118 elements.</div>
+    </div>
+
+    <main>
+      <section class="card" id="mainCard" aria-live="polite">
+        <div id="empty" style="padding:24px;text-align:center;color:var(--muted)">
+          <div style="font-size:40px;margin-bottom:8px">🔎</div>
+          <div style="font-weight:700;font-size:18px">No element selected</div>
+          <div class="note" style="margin-top:8px">Enter an atomic number and click Lookup to show a detailed element profile.</div>
+        </div>
+
+        <div id="profile" style="display:none">
+          <div class="resultHeader">
+            <div class="sym" id="p-symbol">H</div>
+            <div class="meta">
+              <h2 id="p-name">Hydrogen <span class="muted" id="p-category">Nonmetal</span></h2>
+              <div class="muted" id="p-number">Atomic #: 1 • Atomic mass: 1.008</div>
+            </div>
+            <div style="text-align:right">
+              <div class="muted">Period <strong id="p-period">1</strong></div>
+              <div class="muted">Group <strong id="p-group">1</strong></div>
+            </div>
+          </div>
+
+          <hr style="border:none;height:1px;background:rgba(255,255,255,0.03);margin:12px 0">
+
+          <div class="grid2">
+            <div>
+              <div class="sectionTitle">Basic Identification</div>
+              <table>
+                <tr><th>Element Name</th><td id="p-name-2">Hydrogen</td></tr>
+                <tr><th>Symbol</th><td id="p-symbol-2">H</td></tr>
+                <tr><th>Atomic Number</th><td id="p-number-2">1</td></tr>
+                <tr><th>Atomic Mass (avg)</th><td id="p-mass">1.008</td></tr>
+                <tr><th>Category</th><td id="p-cat">Nonmetal</td></tr>
+              </table>
+            </div>
+
+            <div>
+              <div class="sectionTitle">Physical Properties</div>
+              <table>
+                <tr><th>State @ RT</th><td id="p-state">Gas</td></tr>
+                <tr><th>Density</th><td id="p-density">0.00008988 g/cm³</td></tr>
+                <tr><th>Melting Point</th><td id="p-mp">−259.16 °C</td></tr>
+                <tr><th>Boiling Point</th><td id="p-bp">−252.87 °C</td></tr>
+                <tr><th>Color / Appearance</th><td id="p-color">Colorless gas</td></tr>
+              </table>
+            </div>
+
+            <div>
+              <div class="sectionTitle">Atomic Structure</div>
+              <table>
+                <tr><th>Electronic Configuration</th><td id="p-ecfg">1s1</td></tr>
+                <tr><th>Protons</th><td id="p-protons">1</td></tr>
+                <tr><th>Neutrons</th><td id="p-neutrons">0 (most common)</td></tr>
+                <tr><th>Electrons</th><td id="p-electrons">1</td></tr>
+                <tr><th>Oxidation States</th><td id="p-ox">+1, −1</td></tr>
+              </table>
+            </div>
+
+            <div>
+              <div class="sectionTitle">Chemical Properties</div>
+              <table>
+                <tr><th>Electronegativity</th><td id="p-en">2.20 (Pauling)</td></tr>
+                <tr><th>Ionization Energy</th><td id="p-ion">13.598 eV</td></tr>
+                <tr><th>Common Compounds</th><td id="p-comp">H₂O, HCl, CH₄</td></tr>
+                <tr><th>Reactivity</th><td id="p-react">High (very reactive as radical and when bonded)</td></tr>
+              </table>
+            </div>
+
+            <div>
+              <div class="sectionTitle">Uses & Importance</div>
+              <table>
+                <tr><th>Applications</th><td id="p-uses">Fuel cells, ammonia synthesis, rocket propellant</td></tr>
+                <tr><th>Biological Role</th><td id="p-bio">Essential (part of water & organic molecules)</td></tr>
+                <tr><th>Industries</th><td id="p-ind">Energy, chemical manufacturing, aerospace</td></tr>
+              </table>
+            </div>
+
+            <div>
+              <div class="sectionTitle">History & Discovery</div>
+              <table>
+                <tr><th>Year Discovered</th><td id="p-year">1766</td></tr>
+                <tr><th>Discovered By</th><td id="p-by">Henry Cavendish (isolation)</td></tr>
+                <tr><th>Origin of Name</th><td id="p-origin">Greek 'hydro' (water) + 'genes' (forming)</td></tr>
+              </table>
+            </div>
+
+            <div>
+              <div class="sectionTitle">Fun & Safety</div>
+              <table>
+                <tr><th>Interesting Facts</th><td id="p-fun">Most abundant element in the universe; used in stars.</td></tr>
+                <tr><th>Safety</th><td id="p-safety">Highly flammable; forms explosive mixtures with air.</td></tr>
+                <tr><th>Abundance</th><td id="p-abund">Universe: ~75% by mass; Earth's crust: trace</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <div style="margin-top:12px">
+            <div class="sectionTitle">Quick Reference (copyable)</div>
+            <pre id="p-json" style="white-space:pre-wrap"></pre>
+          </div>
+        </div>
+      </section>
+
+      <aside class="card" id="sideCard">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div>
+            <div class="sectionTitle">Quick Actions</div>
+            <button id="copyBtn" class="ghost" style="width:100%">Copy profile text</button>
+            <button id="downloadBtn" style="background:var(--accent);width:100%">Download JSON</button>
+          </div>
+
+          <div>
+            <div class="sectionTitle">Search Tips</div>
+            <div class="note">• Enter atomic number (1–118).<br>• Use "Random" to test different elements.<br>• Ask me to expand dataset to include more elements.</div>
+          </div>
+
+          <div>
+            <div class="sectionTitle">Dataset Status</div>
+            <div class="note" id="datasetNote">Currently: detailed entries for elements 1–118.</div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>Made for learning — ask me to continue and I will add more element entries until all 118 are included.</footer>
+  </div>
+
+<script>
+  const elements = [
+    {
+      number:1, symbol:"H", name:"Hydrogen", mass:"1.008", category:"Nonmetal",
+      state:"Gas", density:"0.00008988 g/cm³ (0 °C)", melting_point:"−259.16 °C", boiling_point:"−252.87 °C", color:"Colorless gas",
+      econfig:"1s1", protons:1, neutrons:"0 (protium)", electrons:1, oxidation_states:"+1, -1",
+      period:1, group:1,
+      electronegativity:"2.20 (Pauling)", ionization_energy:"13.598 eV",
+      common_compounds:["H₂O","HCl","CH₄"], reactivity:"High (forms many compounds)",
+      uses:["Fuel cells","Ammonia production (Haber)","Rocket propellant"], biological_role:"Essential (in water & organic molecules)",
+      industries:["Energy","Chemical manufacturing","Aerospace"],
+      year_discovered:"1766 (isolated)", discovered_by:"Henry Cavendish (isolated)", name_origin:"Greek 'hydro' (water) + 'genes' (forming)",
+      fun_facts:["Most abundant element in the universe by mass","Hydrogen fuel cells power vehicles"], safety:"Extremely flammable; forms explosive mixtures with air", abundance:"Universe ~75% by mass; Earth crust trace"
+    },
+    {
+      number:2, symbol:"He", name:"Helium", mass:"4.002602", category:"Noble Gas",
+      state:"Gas", density:"0.0001785 g/cm³ (0 °C)", melting_point:"−272.2 °C (under pressure)", boiling_point:"−268.93 °C", color:"Colorless gas",
+      econfig:"1s2", protons:2, neutrons:2, electrons:2, oxidation_states:"0 (inert)",
+      period:1, group:18,
+      electronegativity:"—", ionization_energy:"24.587 eV",
+      common_compounds:[], reactivity:"Inert (very low)", uses:["Cryogenics (superconducting magnets)","Lifting gas in balloons","Leak detection"],
+      biological_role:"Inert (physically present in atmosphere in tiny amounts)", industries:["Medical MRI","Aerospace","Electronics"],
+      year_discovered:"1895", discovered_by:"Pierre Janssen & Norman Lockyer (spectral detection) / isolated by Sir William Ramsay", name_origin:"From Greek 'helios' (sun) via 'Helium' discovered in solar spectrum",
+      fun_facts:["Second most abundant element in the universe","Used to cool superconducting magnets in MRI machines"], safety:"Non-toxic but can cause asphyxiation in enclosed spaces", abundance:"Universe ~24% by mass; Earth crust trace"
+    },
+    {
+      number:3, symbol:"Li", name:"Lithium", mass:"6.94", category:"Alkali Metal",
+      state:"Solid", density:"0.534 g/cm³", melting_point:"180.54 °C", boiling_point:"1342 °C", color:"Silvery-white",
+      econfig:"[He] 2s1", protons:3, neutrons:4, electrons:3, oxidation_states:"+1",
+      period:2, group:1,
+      electronegativity:"0.98", ionization_energy:"5.392 eV",
+      common_compounds:["Li₂CO₃","LiPF₆"], reactivity:"Highly reactive (oxidizes, reacts with water)",
+      uses:["Rechargeable batteries (Li-ion)","Ceramics","Organic synthesis"], biological_role:"Trace element; some roles in medicine (lithium salts for bipolar disorder) but toxic in excess",
+      industries:["Battery manufacturing","Pharmaceuticals","Ceramics"],
+      year_discovered:"1817", discovered_by:"Johan August Arfwedson", name_origin:"From Greek 'lithos' (stone)",
+      fun_facts:["Lightest solid element","Used in high-energy batteries"], safety:"Reactive; store under oil; toxic in large amounts", abundance:"~20 ppm in Earth's crust"
+    },
+    {
+      number:4, symbol:"Be", name:"Beryllium", mass:"9.0121831", category:"Alkaline Earth Metal",
+      state:"Solid", density:"1.85 g/cm³", melting_point:"1287 °C", boiling_point:"2469 °C", color:"Steel gray",
+      econfig:"[He] 2s2", protons:4, neutrons:5, electrons:4, oxidation_states:"+2",
+      period:2, group:2,
+      electronegativity:"1.57", ionization_energy:"9.3227 eV",
+      common_compounds:["BeO","BeCl₂"], reactivity:"Moderate (does not react with water)", 
+      uses:["Aerospace alloys","X-ray windows","Nuclear applications"], biological_role:"Toxic; not essential",
+      industries:["Aerospace","Nuclear","Electronics"],
+      year_discovered:"1798", discovered_by:"Louis-Nicolas Vauquelin", name_origin:"From beryl mineral (Greek 'beryllos')",
+      fun_facts:["Light and stiff metal used in aerospace"], safety:"Highly toxic (berylliosis) — strict handling and PPE required", abundance:"~2.8 ppm in Earth's crust"
+    },
+    {
+      number:5, symbol:"B", name:"Boron", mass:"10.81", category:"Metalloid",
+      state:"Solid", density:"2.34 g/cm³ (amorphous)", melting_point:"2076 °C", boiling_point:"~3927 °C", color:"Brown/black (amorphous)",
+      econfig:"[He] 2s2 2p1", protons:5, neutrons:6, electrons:5, oxidation_states:"+3",
+      period:2, group:13,
+      electronegativity:"2.04", ionization_energy:"8.298 eV",
+      common_compounds:["B₂O₃","B(OH)₃"], reactivity:"Moderate (forms strong covalent structures)",
+      uses:["Fiberglass","Detergents","Boron carbide in armor"], biological_role:"Trace essential for some plants; not essential for humans",
+      industries:["Glass & ceramics","Agriculture","Defense"],
+      year_discovered:"Ancient (isolated 1808)", discovered_by:"Humphry Davy (isolated elemental form)", name_origin:"From 'borax' mineral (Arabic/Persian origin)",
+      fun_facts:["Used in bulletproof and abrasive materials","Boric acid used as antiseptic"], safety:"Generally low toxicity but some compounds toxic", abundance:"~10 ppm in Earth's crust"
+    },
+    {
+      number:6, symbol:"C", name:"Carbon", mass:"12.011", category:"Nonmetal",
+      state:"Solid", density:"~2.267 g/cm³ (graphite)", melting_point:"~3550 °C (sublimation)", boiling_point:"~4827 °C", color:"Black (graphite), colorless (diamond)",
+      econfig:"[He] 2s2 2p2", protons:6, neutrons:6, electrons:6, oxidation_states:"−4 to +4",
+      period:2, group:14,
+      electronegativity:"2.55", ionization_energy:"11.260 eV",
+      common_compounds:["CO₂","CH₄","C₆H₆"], reactivity:"Varies by allotrope; reactive in many organic reactions",
+      uses:["Organic chemistry backbone","Steel alloying (carbon steel)","Materials (graphene, diamond)"], biological_role:"Essential for life (building block of organic molecules)",
+      industries:["Chemical","Steel","Electronics (graphene)"],
+      year_discovered:"Known since antiquity", discovered_by:"N/A (known elementally)", name_origin:"Latin 'carbo' (coal)",
+      fun_facts:["Allotropes include diamond and graphite","Carbon forms more compounds than any other element"], safety:"Generally safe in elemental forms (some forms like soot are hazardous to inhale)", abundance:"~200–2000 ppm in Earth's crust; very abundant in universe"
+    },
+    {
+      number:7, symbol:"N", name:"Nitrogen", mass:"14.007", category:"Nonmetal",
+      state:"Gas", density:"0.0012506 g/cm³", melting_point:"−210.00 °C", boiling_point:"−195.79 °C", color:"Colorless gas",
+      econfig:"[He] 2s2 2p3", protons:7, neutrons:7, electrons:7, oxidation_states:"−3 to +5",
+      period:2, group:15,
+      electronegativity:"3.04", ionization_energy:"14.534 eV",
+      common_compounds:["N₂","NH₃","NO₂"], reactivity:"Relatively inert as N₂, reactive when fixed into compounds",
+      uses:["Fertilizers","Inert atmospheres","Explosives (nitro compounds)"], biological_role:"Essential (component of amino acids, DNA)",
+      industries:["Agriculture","Chemical","Aerospace"],
+      year_discovered:"1772", discovered_by:"Daniel Rutherford", name_origin:"Latin 'nitrogen' (saltpeter former)",
+      fun_facts:["78% of Earth's atmosphere by volume","Nitrogen fixation critical for agriculture"], safety:"Asphyxiant in high concentrations; inert otherwise", abundance:"~78% of atmosphere by volume"
+    },
+    {
+      number:8, symbol:"O", name:"Oxygen", mass:"15.999", category:"Nonmetal",
+      state:"Gas", density:"0.001429 g/cm³", melting_point:"−218.79 °C", boiling_point:"−182.95 °C", color:"Colorless gas (liquid is pale blue)",
+      econfig:"[He] 2s2 2p4", protons:8, neutrons:8, electrons:8, oxidation_states:"−2 (most common)",
+      period:2, group:16,
+      electronegativity:"3.44", ionization_energy:"13.618 eV",
+      common_compounds:["H₂O","CO₂","O₃"], reactivity:"Highly reactive (supports combustion)",
+      uses:["Respiration support","Steelmaking (oxidizer)","Oxidation processes"], biological_role:"Essential (cellular respiration)",
+      industries:["Healthcare","Metallurgy","Chemical"],
+      year_discovered:"1774", discovered_by:"Joseph Priestley / Carl Wilhelm Scheele (independently)", name_origin:"Greek 'oxys' (acid) + 'genes' (producer)",
+      fun_facts:["Ozone (O₃) protects from UV but is a pollutant at ground level"], safety:"Supports combustion; pure oxygen environments increase fire risk", abundance:"~21% of atmosphere by volume"
+    },
+    {
+      number:9, symbol:"F", name:"Fluorine", mass:"18.998403163", category:"Halogen",
+      state:"Gas", density:"0.001696 g/cm³", melting_point:"−219.67 °C", boiling_point:"−188.11 °C", color:"Pale yellow gas",
+      econfig:"[He] 2s2 2p5", protons:9, neutrons:10, electrons:9, oxidation_states:"−1",
+      period:2, group:17,
+      electronegativity:"3.98", ionization_energy:"17.4228 eV",
+      common_compounds:["HF","NaF","SF₆"], reactivity:"Extremely reactive (most electronegative element)",
+      uses:["Toothpaste (fluoride)","Fluoropolymers","Chemical synthesis"], biological_role:"Trace amounts used in dental care; elemental F highly toxic",
+      industries:["Chemical","Pharmaceuticals","Manufacturing"],
+      year_discovered:"1810", discovered_by:"Henri Moissan (isolated in 1886)", name_origin:"Latin 'fluere' (to flow) or from fluorite mineral",
+      fun_facts:["Most reactive of the elements; reacts with glass and many metals"], safety:"Extremely toxic and corrosive; handle under special conditions", abundance:"~575 ppm in Earth's crust (as compounds)"
+    },
+    {
+      number:10, symbol:"Ne", name:"Neon", mass:"20.1797", category:"Noble Gas",
+      state:"Gas", density:"0.0008999 g/cm³", melting_point:"−248.59 °C", boiling_point:"−246.08 °C", color:"Colorless (neon lights glow reddish-orange)",
+      econfig:"[He] 2s2 2p6", protons:10, neutrons:10, electrons:10, oxidation_states:"0 (inert)",
+      period:2, group:18,
+      electronegativity:"—", ionization_energy:"21.5645 eV",
+      common_compounds:[], reactivity:"Inert", uses:["Neon signage","Cryogenics (some low-temp applications)"], biological_role:"Inert; no known biological role",
+      industries:["Advertising signage","Lighting"],
+      year_discovered:"1898", discovered_by:"Sir William Ramsay & Morris Travers", name_origin:"Greek 'neos' (new)",
+      fun_facts:["Neon lights produce a distinct red-orange glow"], safety:"Non-toxic; asphyxiant risk in confined spaces", abundance:"~1 ppm in atmosphere"
+    },
+    {
+      number:11, symbol:"Na", name:"Sodium", mass:"22.98976928", category:"Alkali Metal",
+      state:"Solid", density:"0.97 g/cm³", melting_point:"97.72 °C", boiling_point:"883 °C", color:"Silvery-white",
+      econfig:"[Ne] 3s1", protons:11, neutrons:12, electrons:11, oxidation_states:"+1",
+      period:3, group:1,
+      electronegativity:"0.93", ionization_energy:"5.1391 eV",
+      common_compounds:["NaCl","NaOH"], reactivity:"Very reactive with water (forms hydroxide and hydrogen)",
+      uses:["Table salt (NaCl)","Chemical reagents (NaOH)","Heat exchangers (some alloys)"], biological_role:"Essential electrolyte (sodium ions)", industries:["Food","Chemical"],
+      year_discovered:"1807 (isolated)", discovered_by:"Humphry Davy", name_origin:"From 'soda' (sodium compounds)",
+      fun_facts:["Soft metal that can be cut with a knife; reacts vigorously with water"], safety:"Reactive; handle under inert atmosphere or oil", abundance:"~2.3% of Earth's crust (as compounds)"
+    },
+    {
+      number:12, symbol:"Mg", name:"Magnesium", mass:"24.305", category:"Alkaline Earth Metal",
+      state:"Solid", density:"1.738 g/cm³", melting_point:"650 °C", boiling_point:"1090 °C", color:"Silvery-white",
+      econfig:"[Ne] 3s2", protons:12, neutrons:12, electrons:12, oxidation_states:"+2",
+      period:3, group:2,
+      electronegativity:"1.31", ionization_energy:"7.6462 eV",
+      common_compounds:["MgO","Mg(OH)₂"], reactivity:"Moderately reactive (burns with bright white flame)", 
+      uses:["Alloys (lightweight components)","Agriculture (Mg fertilizers)","Fireworks"], biological_role:"Essential mineral (chlorophyll central atom)", industries:["Aerospace","Fertilizer"],
+      year_discovered:"1755 (recognized as an element)", discovered_by:"Joseph Black (compound) / isolated later", name_origin:"From Magnesia (region in Greece)",
+      fun_facts:["Central atom in chlorophyll"], safety:"Fine powders can be flammable; metal is relatively safe", abundance:"~2% of Earth's crust"
+    },
+    {
+      number:13, symbol:"Al", name:"Aluminium", mass:"26.9815385", category:"Post-Transition Metal",
+      state:"Solid", density:"2.70 g/cm³", melting_point:"660.32 °C", boiling_point:"2519 °C", color:"Silvery-white",
+      econfig:"[Ne] 3s2 3p1", protons:13, neutrons:14, electrons:13, oxidation_states:"+3",
+      period:3, group:13,
+      electronegativity:"1.61", ionization_energy:"5.9858 eV",
+      common_compounds:["Al₂O₃","AlCl₃"], reactivity:"Corrodes in presence of oxygen but forms protective oxide",
+      uses:["Packaging (foil)","Construction","Aerospace (alloys)"], biological_role:"Not essential; generally non-toxic in metallic form",
+      industries:["Construction","Aerospace","Packaging"],
+      year_discovered:"1825 (isolated)", discovered_by:"Hans Christian Ørsted (isolated)", name_origin:"From Latin 'alumen' (alum)",
+      fun_facts:["Very common metal; forms protective oxide layer"], safety:"Generally low toxicity", abundance:"~8.23% of Earth's crust"
+    },
+    {
+      number:14, symbol:"Si", name:"Silicon", mass:"28.085", category:"Metalloid",
+      state:"Solid", density:"2.329 g/cm³", melting_point:"1414 °C", boiling_point:"3265 °C", color:"Dark gray crystalline",
+      econfig:"[Ne] 3s2 3p2", protons:14, neutrons:14, electrons:14, oxidation_states:"−4 to +4",
+      period:3, group:14,
+      electronegativity:"1.90", ionization_energy:"8.1517 eV",
+      common_compounds:["SiO₂","SiH₄"], reactivity:"Relatively stable (form strong covalent network in silica)",
+      uses:["Semiconductors (electronics)","Glass production","Silicones"], biological_role:"Trace; not essential for humans", industries:["Electronics","Glass","Construction"],
+      year_discovered:"1824 (isolated)", discovered_by:"Jöns Jakob Berzelius (isolated)", name_origin:"From Latin 'silex' (flint)",
+      fun_facts:["Basis of modern electronics (silicon chips)"], safety:"Generally low toxicity; fine dust can be hazardous", abundance:"~28% of Earth's crust"
+    },
+    {
+      number:15, symbol:"P", name:"Phosphorus", mass:"30.973761998", category:"Nonmetal",
+      state:"Solid", density:"~1.82 g/cm³ (white P)", melting_point:"44.15 °C (white P)", boiling_point:"280 °C (sublimes)", color:"White/Red depending on allotrope",
+      econfig:"[Ne] 3s2 3p3", protons:15, neutrons:16, electrons:15, oxidation_states:"−3 to +5",
+      period:3, group:15,
+      electronegativity:"2.19", ionization_energy:"10.4867 eV",
+      common_compounds:["H₃PO₄","P₂O₅"], reactivity:"White phosphorus is highly reactive and pyrophoric",
+      uses:["Fertilizers (phosphates)","Matches","Industrial chemicals"], biological_role:"Essential (DNA/RNA backbone, ATP)", industries:["Agriculture","Chemical"],
+      year_discovered:"1669 (phosphorus discovered)", discovered_by:"Hennig Brand", name_origin:"Greek 'phosphoros' (light-bearer)",
+      fun_facts:["White phosphorus glows in the dark (chemiluminescence)"], safety:"White P is highly toxic and pyrophoric; red/black allotropes safer", abundance:"~0.1% of Earth's crust (as phosphates)"
+    },
+    {
+      number:16, symbol:"S", name:"Sulfur", mass:"32.06", category:"Nonmetal",
+      state:"Solid", density:"2.07 g/cm³", melting_point:"115.21 °C", boiling_point:"444.6 °C", color:"Yellow (solid)",
+      econfig:"[Ne] 3s2 3p4", protons:16, neutrons:16, electrons:16, oxidation_states:"−2 to +6",
+      period:3, group:16,
+      electronegativity:"2.58", ionization_energy:"10.36 eV",
+      common_compounds:["SO₂","H₂S"], reactivity:"Reactive with many elements and oxidizers",
+      uses:["Sulfuric acid production","Vulcanization of rubber","Fertilizers"], biological_role:"Essential (amino acids cysteine & methionine)", industries:["Chemical","Fertilizer"],
+      year_discovered:"Known since ancient times", discovered_by:"N/A", name_origin:"From Latin 'sulfur' or 'sulphur'",
+      fun_facts:["Yellow element with many allotropes"], safety:"Toxic fumes (SO₂,H₂S) — handle with ventilation", abundance:"~0.03% of Earth's crust"
+    },
+    {
+      number:17, symbol:"Cl", name:"Chlorine", mass:"35.45", category:"Halogen",
+      state:"Gas", density:"0.003214 g/cm³", melting_point:"−101.5 °C", boiling_point:"−34.04 °C", color:"Greenish-yellow gas",
+      econfig:"[Ne] 3s2 3p5", protons:17, neutrons:18, electrons:17, oxidation_states:"−1, +1, +3, +5, +7",
+      period:3, group:17,
+      electronegativity:"3.16", ionization_energy:"12.968 eV",
+      common_compounds:["NaCl","Cl₂O"], reactivity:"Very reactive (powerful oxidizer in many forms)",
+      uses:["Water disinfection","PVC manufacture","Bleaching agents"], biological_role:"Essential as chloride ion in physiology (electrolytes) but elemental Cl₂ is toxic",
+      industries:["Water treatment","Chemical manufacturing"],
+      year_discovered:"1774", discovered_by:"Carl Wilhelm Scheele", name_origin:"From Greek 'chloros' (greenish-yellow)",
+      fun_facts:["Used in water disinfection since early 20th century"], safety:"Toxic, corrosive gas; severe inhalation hazard", abundance:"~0.05% in Earth's crust (mainly as salts)"
+    },
+    {
+      number:18, symbol:"Ar", name:"Argon", mass:"39.948", category:"Noble Gas",
+      state:"Gas", density:"0.0017837 g/cm³", melting_point:"−189.34 °C", boiling_point:"−185.848 °C", color:"Colorless gas",
+      econfig:"[Ne] 3s2 3p6", protons:18, neutrons:22, electrons:18, oxidation_states:"0 (inert)",
+      period:3, group:18,
+      electronegativity:"—", ionization_energy:"15.760 eV",
+      common_compounds:[], reactivity:"Inert",
+      uses:["Shielding gas in welding","Lighting (gas-discharge)"], biological_role:"Inert; no biological role", industries:["Welding","Lighting"],
+      year_discovered:"1894", discovered_by:"Lord Rayleigh & Sir William Ramsay", name_origin:"Greek 'argos' (inactive)",
+      fun_facts:["Makes up ~1% of atmosphere; used for inert atmospheres"], safety:"Asphyxiant in confined spaces", abundance:"~0.93% of atmosphere"
+    },
+    {
+      number:19, symbol:"K", name:"Potassium", mass:"39.0983", category:"Alkali Metal",
+      state:"Solid", density:"0.862 g/cm³", melting_point:"63.5 °C", boiling_point:"759 °C", color:"Silvery-white",
+      econfig:"[Ar] 4s1", protons:19, neutrons:20, electrons:19, oxidation_states:"+1",
+      period:4, group:1,
+      electronegativity:"0.82", ionization_energy:"4.3407 eV",
+      common_compounds:["KCl","KOH"], reactivity:"Extremely reactive with water (produces hydrogen and heat)",
+      uses:["Fertilizers (potash)","Chemical reagents","Biological applications"], biological_role:"Essential electrolyte (K⁺) for cells", industries:["Agriculture","Chemical"],
+      year_discovered:"1807", discovered_by:"Humphry Davy", name_origin:"From 'potash' (pot ashes)",
+      fun_facts:["Soft metal, reacts violently with water"], safety:"Extremely reactive; store under oil; handle with care", abundance:"~2.6% of Earth's crust (as compounds)"
+    },
+    {
+      number:20, symbol:"Ca", name:"Calcium", mass:"40.078", category:"Alkaline Earth Metal",
+      state:"Solid", density:"1.55 g/cm³", melting_point:"842 °C", boiling_point:"1484 °C", color:"Silvery-gray",
+      econfig:"[Ar] 4s2", protons:20, neutrons:20, electrons:20, oxidation_states:"+2",
+      period:4, group:2,
+      electronegativity:"1.00", ionization_energy:"6.1132 eV",
+      common_compounds:["CaCO₃","CaCl₂"], reactivity:"Reactive with water (less so than alkali metals)",
+      uses:["Construction (cement & concrete)","Biological (bones & teeth)","Metallurgy"], biological_role:"Essential (bone mineral, signaling)", industries:["Construction","Healthcare"],
+      year_discovered:"Ancient (isolated 1808)", discovered_by:"Humphry Davy (isolated)", name_origin:"Latin 'calx' (lime)",
+      fun_facts:["Major component of bones and shells"], safety:"Compounds generally low toxicity; metal reactive", abundance:"~3.6% of Earth's crust"
+    },
+    {
+    number:21, symbol:"Sc", name:"Scandium", mass:"44.955", category:"Transition Metal",
+    state:"Solid", density:"2.985 g/cm³", melting_point:"1541 °C", boiling_point:"2836 °C", color:"Silvery-white",
+    econfig:"[Ar] 3d1 4s2", protons:21, neutrons:24, electrons:21, oxidation_states:"+3",
+    period:4, group:3,
+    electronegativity:"1.36", ionization_energy:"6.5615 eV",
+    common_compounds:["Sc₂O₃","ScCl₃"], reactivity:"Forms stable +3 compounds",
+    uses:["Aerospace alloys","Sports equipment","Lighting"], biological_role:"No known role", industries:["Aerospace","Electronics"],
+    year_discovered:"1879", discovered_by:"Lars Fredrik Nilson", name_origin:"From Latin 'Scandia' (Scandinavia)",
+    fun_facts:["Sometimes called a 'rare earth' element though it’s not rare"], safety:"Low toxicity, handle dust with care", abundance:"~22 ppm in Earth's crust"
+    },
+{
+  number:22, symbol:"Ti", name:"Titanium", mass:"47.867", category:"Transition Metal",
+  state:"Solid", density:"4.506 g/cm³", melting_point:"1668 °C", boiling_point:"3287 °C", color:"Silvery-gray",
+  econfig:"[Ar] 3d2 4s2", protons:22, neutrons:26, electrons:22, oxidation_states:"+2, +3, +4",
+  period:4, group:4,
+  electronegativity:"1.54", ionization_energy:"6.8281 eV",
+  common_compounds:["TiO₂","TiCl₄"], reactivity:"Resistant to corrosion",
+  uses:["Aircraft","Implants","Pigments"], biological_role:"No essential role, biocompatible", industries:["Aerospace","Medical","Paints"],
+  year_discovered:"1791", discovered_by:"William Gregor", name_origin:"Named after the Titans of Greek mythology",
+  fun_facts:["As strong as steel but much lighter"], safety:"Generally safe, dust can irritate lungs", abundance:"~0.6% of Earth's crust"
+},
+{
+  number:23, symbol:"V", name:"Vanadium", mass:"50.942", category:"Transition Metal",
+  state:"Solid", density:"6.11 g/cm³", melting_point:"1910 °C", boiling_point:"3407 °C", color:"Silvery-gray",
+  econfig:"[Ar] 3d3 4s2", protons:23, neutrons:28, electrons:23, oxidation_states:"+2, +3, +4, +5",
+  period:4, group:5,
+  electronegativity:"1.63", ionization_energy:"6.746 eV",
+  common_compounds:["V₂O₅","NaVO₃"], reactivity:"Forms colorful oxidation states",
+  uses:["Steel alloys","Catalysts","Batteries"], biological_role:"Trace element, may aid enzymes", industries:["Metallurgy","Energy"],
+  year_discovered:"1801", discovered_by:"Andrés Manuel del Río", name_origin:"Named after Norse goddess Vanadis (Freyja)",
+  fun_facts:["Used in redox flow batteries"], safety:"Compounds can be toxic", abundance:"~0.019% of Earth's crust"
+},
+{
+  number:24, symbol:"Cr", name:"Chromium", mass:"51.996", category:"Transition Metal",
+  state:"Solid", density:"7.19 g/cm³", melting_point:"1907 °C", boiling_point:"2671 °C", color:"Silvery-metallic",
+  econfig:"[Ar] 3d5 4s1", protons:24, neutrons:28, electrons:24, oxidation_states:"+2, +3, +6",
+  period:4, group:6,
+  electronegativity:"1.66", ionization_energy:"6.766 eV",
+  common_compounds:["Cr₂O₃","K₂Cr₂O₇"], reactivity:"Resistant to corrosion",
+  uses:["Stainless steel","Plating","Pigments"], biological_role:"Trace essential (glucose metabolism)", industries:["Metallurgy","Chemicals"],
+  year_discovered:"1797", discovered_by:"Louis Nicolas Vauquelin", name_origin:"Greek 'chroma' (color)",
+  fun_facts:["Responsible for the shine in stainless steel"], safety:"Hexavalent chromium is highly toxic", abundance:"~0.037% of Earth's crust"
+},
+{
+  number:25, symbol:"Mn", name:"Manganese", mass:"54.938", category:"Transition Metal",
+  state:"Solid", density:"7.21 g/cm³", melting_point:"1246 °C", boiling_point:"2061 °C", color:"Gray-white",
+  econfig:"[Ar] 3d5 4s2", protons:25, neutrons:30, electrons:25, oxidation_states:"+2, +3, +4, +6, +7",
+  period:4, group:7,
+  electronegativity:"1.55", ionization_energy:"7.434 eV",
+  common_compounds:["MnO₂","KMnO₄"], reactivity:"Forms many oxides",
+  uses:["Steelmaking","Batteries","Fertilizers"], biological_role:"Essential trace nutrient (enzymes)", industries:["Metallurgy","Energy","Agriculture"],
+  year_discovered:"1774", discovered_by:"Carl Wilhelm Scheele & Johan Gottlieb Gahn", name_origin:"From Latin 'magnes' (magnet, due to minerals)",
+  fun_facts:["Vital for photosynthesis in plants"], safety:"Dust/toxic compounds harmful in excess", abundance:"~0.1% of Earth's crust"
+},
+{
+  number:26, symbol:"Fe", name:"Iron", mass:"55.845", category:"Transition Metal",
+  state:"Solid", density:"7.874 g/cm³", melting_point:"1538 °C", boiling_point:"2862 °C", color:"Gray metallic",
+  econfig:"[Ar] 3d6 4s2", protons:26, neutrons:30, electrons:26, oxidation_states:"+2, +3",
+  period:4, group:8,
+  electronegativity:"1.83", ionization_energy:"7.902 eV",
+  common_compounds:["Fe₂O₃","Fe₃O₄","FeCl₃"], reactivity:"Rusts in moist air",
+  uses:["Construction (steel)","Tools","Blood hemoglobin"], biological_role:"Essential for oxygen transport", industries:["Construction","Automotive","Healthcare"],
+  year_discovered:"Ancient", discovered_by:"Prehistoric use", name_origin:"Anglo-Saxon 'iren', Latin 'ferrum'",
+  fun_facts:["Earth’s core is mostly iron"], safety:"Rust is non-toxic; metallic dust harmful", abundance:"~5% of Earth's crust"
+},
+{
+  number:27, symbol:"Co", name:"Cobalt", mass:"58.933", category:"Transition Metal",
+  state:"Solid", density:"8.90 g/cm³", melting_point:"1495 °C", boiling_point:"2927 °C", color:"Bluish-gray",
+  econfig:"[Ar] 3d7 4s2", protons:27, neutrons:32, electrons:27, oxidation_states:"+2, +3",
+  period:4, group:9,
+  electronegativity:"1.88", ionization_energy:"7.88 eV",
+  common_compounds:["CoCl₂","CoO"], reactivity:"Forms colorful compounds",
+  uses:["Rechargeable batteries","Magnets","Alloys"], biological_role:"Essential in vitamin B₁₂", industries:["Energy","Electronics","Healthcare"],
+  year_discovered:"1735", discovered_by:"Georg Brandt", name_origin:"From German 'Kobold' (goblin, due to toxic ores)",
+  fun_facts:["Vital in lithium-ion batteries"], safety:"Dust and salts toxic", abundance:"~25 ppm in Earth's crust"
+},
+{
+  number:28, symbol:"Ni", name:"Nickel", mass:"58.693", category:"Transition Metal",
+  state:"Solid", density:"8.908 g/cm³", melting_point:"1455 °C", boiling_point:"2913 °C", color:"Silvery-white",
+  econfig:"[Ar] 3d8 4s2", protons:28, neutrons:31, electrons:28, oxidation_states:"+2, +3",
+  period:4, group:10,
+  electronegativity:"1.91", ionization_energy:"7.6398 eV",
+  common_compounds:["NiO","NiCl₂"], reactivity:"Slowly oxidizes",
+  uses:["Coins","Stainless steel","Batteries"], biological_role:"Trace amounts needed in enzymes", industries:["Metallurgy","Energy"],
+  year_discovered:"1751", discovered_by:"Axel Fredrik Cronstedt", name_origin:"From German 'Kupfernickel' (false copper)",
+  fun_facts:["Used in coins worldwide"], safety:"Can cause skin allergies", abundance:"~0.008% of Earth's crust"
+},
+{
+  number:29, symbol:"Cu", name:"Copper", mass:"63.546", category:"Transition Metal",
+  state:"Solid", density:"8.96 g/cm³", melting_point:"1085 °C", boiling_point:"2562 °C", color:"Reddish-brown",
+  econfig:"[Ar] 3d10 4s1", protons:29, neutrons:35, electrons:29, oxidation_states:"+1, +2",
+  period:4, group:11,
+  electronegativity:"1.90", ionization_energy:"7.726 eV",
+  common_compounds:["CuSO₄","CuCl₂"], reactivity:"Oxidizes to green patina",
+  uses:["Electrical wiring","Coins","Plumbing"], biological_role:"Essential trace element (enzymes, blood proteins)", industries:["Electronics","Construction"],
+  year_discovered:"Ancient", discovered_by:"Prehistoric use", name_origin:"From Latin 'cuprum' (Cyprus)",
+  fun_facts:["Statue of Liberty is made of copper"], safety:"Essential in diet, excess is toxic", abundance:"~0.0068% of Earth's crust"
+},
+{
+  number:30, symbol:"Zn", name:"Zinc", mass:"65.38", category:"Transition Metal",
+  state:"Solid", density:"7.14 g/cm³", melting_point:"419.5 °C", boiling_point:"907 °C", color:"Bluish-silver",
+  econfig:"[Ar] 3d10 4s2", protons:30, neutrons:35, electrons:30, oxidation_states:"+2",
+  period:4, group:12,
+  electronegativity:"1.65", ionization_energy:"9.394 eV",
+  common_compounds:["ZnO","ZnCl₂"], reactivity:"Reacts with acids",
+  uses:["Galvanizing steel","Alloys (brass)","Batteries"], biological_role:"Essential nutrient (enzymes, immune system)", industries:["Construction","Healthcare","Metallurgy"],
+  year_discovered:"Ancient (isolated 1746)", discovered_by:"Andreas Marggraf", name_origin:"From German 'Zink' (tooth-like, crystal shape)",
+  fun_facts:["Used in sunscreen as ZnO"], safety:"Low toxicity, essential nutrient", abundance:"~0.0075% of Earth's crust"
+},
+{
+  number:31, symbol:"Ga", name:"Gallium", mass:"69.723", category:"Post-transition Metal",
+  state:"Solid", density:"5.91 g/cm³", melting_point:"29.76 °C", boiling_point:"2204 °C", color:"Silvery-blue",
+  econfig:"[Ar] 3d10 4s2 4p1", protons:31, neutrons:39, electrons:31, oxidation_states:"+3",
+  period:4, group:13,
+  electronegativity:"1.81", ionization_energy:"5.999 eV",
+  common_compounds:["GaAs","Ga₂O₃"], reactivity:"Stable in air, dissolves in acids",
+  uses:["Semiconductors (LEDs, solar cells)","Thermometers"], biological_role:"No known role, low toxicity", industries:["Electronics","Aerospace"],
+  year_discovered:"1875", discovered_by:"Paul-Émile Lecoq de Boisbaudran", name_origin:"From Latin 'Gallia' (France)",
+  fun_facts:["Melts in your hand"], safety:"Low toxicity but should not be ingested", abundance:"~19 ppm in Earth's crust"
+},
+{
+  number:32, symbol:"Ge", name:"Germanium", mass:"72.630", category:"Metalloid",
+  state:"Solid", density:"5.32 g/cm³", melting_point:"938.3 °C", boiling_point:"2833 °C", color:"Gray-white",
+  econfig:"[Ar] 3d10 4s2 4p2", protons:32, neutrons:41, electrons:32, oxidation_states:"+2, +4",
+  period:4, group:14,
+  electronegativity:"2.01", ionization_energy:"7.899 eV",
+  common_compounds:["GeO₂","GeCl₄"], reactivity:"Forms oxides and halides",
+  uses:["Fiber optics","Semiconductors","Infrared optics"], biological_role:"No known biological role", industries:["Electronics","Telecom"],
+  year_discovered:"1886", discovered_by:"Clemens Winkler", name_origin:"Named after Germany (Germania)",
+  fun_facts:["Used in early transistors"], safety:"Compounds can be toxic", abundance:"~1.6 ppm in Earth's crust"
+},
+{
+  number:33, symbol:"As", name:"Arsenic", mass:"74.922", category:"Metalloid",
+  state:"Solid", density:"5.73 g/cm³", melting_point:"817 °C (sublimes)", boiling_point:"614 °C (sublimes)", color:"Gray metallic",
+  econfig:"[Ar] 3d10 4s2 4p3", protons:33, neutrons:42, electrons:33, oxidation_states:"-3, +3, +5",
+  period:4, group:15,
+  electronegativity:"2.18", ionization_energy:"9.815 eV",
+  common_compounds:["As₂O₃","AsH₃"], reactivity:"Forms toxic compounds",
+  uses:["Semiconductors (GaAs)","Alloys","Wood preservatives"], biological_role:"Toxic to humans, trace use in some organisms", industries:["Electronics","Agriculture"],
+  year_discovered:"Ancient", discovered_by:"Unknown", name_origin:"Greek 'arsenikon' (yellow pigment)",
+  fun_facts:["Historically used as poison"], safety:"Highly toxic, carcinogenic", abundance:"~1.5 ppm in Earth's crust"
+},
+{
+  number:34, symbol:"Se", name:"Selenium", mass:"78.971", category:"Nonmetal",
+  state:"Solid", density:"4.81 g/cm³", melting_point:"221 °C", boiling_point:"685 °C", color:"Gray/red (allotropes)",
+  econfig:"[Ar] 3d10 4s2 4p4", protons:34, neutrons:45, electrons:34, oxidation_states:"-2, +4, +6",
+  period:4, group:16,
+  electronegativity:"2.55", ionization_energy:"9.752 eV",
+  common_compounds:["SeO₂","H₂Se"], reactivity:"Forms selenides and oxides",
+  uses:["Glassmaking","Electronics","Photocells"], biological_role:"Essential trace element (antioxidant enzymes)", industries:["Electronics","Glass","Healthcare"],
+  year_discovered:"1817", discovered_by:"Jöns Jakob Berzelius", name_origin:"From Greek 'selene' (moon)",
+  fun_facts:["Used in photocopiers"], safety:"Toxic in large amounts", abundance:"~0.05 ppm in Earth's crust"
+},
+{
+  number:35, symbol:"Br", name:"Bromine", mass:"79.904", category:"Halogen",
+  state:"Liquid", density:"3.1028 g/cm³", melting_point:"-7.2 °C", boiling_point:"58.8 °C", color:"Reddish-brown",
+  econfig:"[Ar] 3d10 4s2 4p5", protons:35, neutrons:45, electrons:35, oxidation_states:"-1, +1, +3, +5",
+  period:4, group:17,
+  electronegativity:"2.96", ionization_energy:"11.814 eV",
+  common_compounds:["NaBr","HBr"], reactivity:"Highly reactive, forms salts",
+  uses:["Flame retardants","Photography","Water treatment"], biological_role:"Trace amounts in organisms", industries:["Chemicals","Water treatment"],
+  year_discovered:"1826", discovered_by:"Antoine Balard", name_origin:"From Greek 'bromos' (stench)",
+  fun_facts:["Only nonmetal that is liquid at room temp"], safety:"Toxic, corrosive, harmful vapors", abundance:"~2.5 ppm in Earth's crust"
+},
+{
+  number:36, symbol:"Kr", name:"Krypton", mass:"83.798", category:"Noble Gas",
+  state:"Gas", density:"0.003733 g/cm³", melting_point:"-157.36 °C", boiling_point:"-153.22 °C", color:"Colorless",
+  econfig:"[Ar] 3d10 4s2 4p6", protons:36, neutrons:48, electrons:36, oxidation_states:"0",
+  period:4, group:18,
+  electronegativity:"—", ionization_energy:"13.999 eV",
+  common_compounds:["KrF₂"], reactivity:"Very inert, forms few compounds",
+  uses:["Lighting (flash lamps)","Lasers"], biological_role:"None", industries:["Lighting","Laser technology"],
+  year_discovered:"1898", discovered_by:"William Ramsay & Morris Travers", name_origin:"Greek 'kryptos' (hidden)",
+  fun_facts:["Used in high-speed photography"], safety:"Non-toxic, asphyxiant in high concentration", abundance:"~1.14 ppm in atmosphere"
+},
+{
+  number:37, symbol:"Rb", name:"Rubidium", mass:"85.468", category:"Alkali Metal",
+  state:"Solid", density:"1.532 g/cm³", melting_point:"39.3 °C", boiling_point:"688 °C", color:"Silvery-white",
+  econfig:"[Kr] 5s1", protons:37, neutrons:48, electrons:37, oxidation_states:"+1",
+  period:5, group:1,
+  electronegativity:"0.82", ionization_energy:"4.177 eV",
+  common_compounds:["RbCl","RbOH"], reactivity:"Very reactive, ignites spontaneously in air",
+  uses:["Research","Special glasses","Atomic clocks"], biological_role:"No essential role", industries:["Electronics","Glassmaking"],
+  year_discovered:"1861", discovered_by:"Robert Bunsen & Gustav Kirchhoff", name_origin:"Latin 'rubidius' (deep red, spectral lines)",
+  fun_facts:["More reactive than potassium"], safety:"Highly reactive, must be stored under oil", abundance:"~90 ppm in Earth's crust"
+},
+{
+  number:38, symbol:"Sr", name:"Strontium", mass:"87.62", category:"Alkaline Earth Metal",
+  state:"Solid", density:"2.64 g/cm³", melting_point:"777 °C", boiling_point:"1382 °C", color:"Silvery",
+  econfig:"[Kr] 5s2", protons:38, neutrons:50, electrons:38, oxidation_states:"+2",
+  period:5, group:2,
+  electronegativity:"0.95", ionization_energy:"5.695 eV",
+  common_compounds:["SrCO₃","Sr(NO₃)₂"], reactivity:"Reacts with water and air",
+  uses:["Fireworks (red color)","Magnets","Medical imaging (radioisotopes)"], biological_role:"Trace amounts in bones", industries:["Pyrotechnics","Medical"],
+  year_discovered:"1790", discovered_by:"Adair Crawford", name_origin:"Strontian, Scotland (discovery site)",
+  fun_facts:["Produces crimson flames"], safety:"Radioactive isotopes hazardous", abundance:"~370 ppm in Earth's crust"
+},
+{
+  number:39, symbol:"Y", name:"Yttrium", mass:"88.906", category:"Transition Metal",
+  state:"Solid", density:"4.47 g/cm³", melting_point:"1526 °C", boiling_point:"3338 °C", color:"Silvery-metallic",
+  econfig:"[Kr] 4d1 5s2", protons:39, neutrons:50, electrons:39, oxidation_states:"+3",
+  period:5, group:3,
+  electronegativity:"1.22", ionization_energy:"6.217 eV",
+  common_compounds:["Y₂O₃","YCl₃"], reactivity:"Stable in air as oxide layer forms",
+  uses:["LEDs & phosphors","Superconductors","Medical (cancer treatment isotopes)"], biological_role:"None", industries:["Electronics","Medical"],
+  year_discovered:"1794", discovered_by:"Johan Gadolin", name_origin:"Named after Ytterby, Sweden",
+  fun_facts:["Used in red phosphors for TVs"], safety:"Low toxicity, but compounds may be harmful", abundance:"~33 ppm in Earth's crust"
+},
+{
+  number:40, symbol:"Zr", name:"Zirconium", mass:"91.224", category:"Transition Metal",
+  state:"Solid", density:"6.52 g/cm³", melting_point:"1855 °C", boiling_point:"4409 °C", color:"Silvery-gray",
+  econfig:"[Kr] 4d2 5s2", protons:40, neutrons:51, electrons:40, oxidation_states:"+4",
+  period:5, group:4,
+  electronegativity:"1.33", ionization_energy:"6.633 eV",
+  common_compounds:["ZrO₂","ZrCl₄"], reactivity:"Resistant to corrosion",
+  uses:["Nuclear reactors (low neutron absorption)","Ceramics","Alloys"], biological_role:"None", industries:["Nuclear","Aerospace","Ceramics"],
+  year_discovered:"1789", discovered_by:"Martin Heinrich Klaproth", name_origin:"From mineral zircon",
+  fun_facts:["Used in space shuttle tiles"], safety:"Low toxicity, dust may irritate lungs", abundance:"~165 ppm in Earth's crust"
+},
+{
+  number:41, symbol:"Nb", name:"Niobium", mass:"92.906", category:"Transition Metal",
+  state:"Solid", density:"8.57 g/cm³", melting_point:"2477 °C", boiling_point:"4744 °C", color:"Gray metallic",
+  econfig:"[Kr] 4d4 5s1", protons:41, neutrons:52, electrons:41, oxidation_states:"+5, +3",
+  period:5, group:5,
+  electronegativity:"1.6", ionization_energy:"6.7589 eV",
+  common_compounds:["Nb₂O₅","NbCl₅"], reactivity:"Resistant to corrosion",
+  uses:["Alloying element in steel","Superconductors"], biological_role:"None",
+  industries:["Construction","Electronics","Aerospace"],
+  year_discovered:"1801", discovered_by:"Charles Hatchett", name_origin:"Named after Niobe from Greek mythology",
+  fun_facts:["Used in superconducting magnets"], safety:"Low toxicity", abundance:"20 ppm in Earth's crust"
+},
+{
+  number:42, symbol:"Mo", name:"Molybdenum", mass:"95.95", category:"Transition Metal",
+  state:"Solid", density:"10.28 g/cm³", melting_point:"2623 °C", boiling_point:"4639 °C", color:"Silvery-gray",
+  econfig:"[Kr] 4d5 5s1", protons:42, neutrons:54, electrons:42, oxidation_states:"+6,+4",
+  period:5, group:6,
+  electronegativity:"2.16", ionization_energy:"7.0924 eV",
+  common_compounds:["MoS₂","MoO₃"], reactivity:"Stable, forms compounds with sulfur",
+  uses:["Alloy steel","Catalysts"], biological_role:"Trace element in enzymes",
+  industries:["Steel","Petrochemical"],
+  year_discovered:"1778", discovered_by:"Carl Wilhelm Scheele", name_origin:"From Greek 'molybdos' meaning lead-like",
+  fun_facts:["Essential for nitrogen-fixing bacteria"], safety:"Low toxicity in trace amounts", abundance:"1.2 ppm"
+},
+{
+  number:43, symbol:"Tc", name:"Technetium", mass:"98", category:"Transition Metal",
+  state:"Solid", density:"11 g/cm³", melting_point:"2157 °C", boiling_point:"4265 °C", color:"Silvery-gray",
+  econfig:"[Kr] 4d5 5s2", protons:43, neutrons:55, electrons:43, oxidation_states:"+7,+4,+2",
+  period:5, group:7,
+  electronegativity:"1.9", ionization_energy:"7.28 eV",
+  common_compounds:["TcO₂","TcCl₄"], reactivity:"Radioactive, forms oxides and halides",
+  uses:["Medical imaging (radioisotopes)"], biological_role:"None",
+  industries:["Nuclear medicine"],
+  year_discovered:"1937", discovered_by:"Carlo Perrier & Emilio Segrè", name_origin:"From Greek 'technetos' meaning artificial",
+  fun_facts:["First artificially produced element"], safety:"Radioactive", abundance:"Trace in uranium ores"
+},
+{
+  number:44, symbol:"Ru", name:"Ruthenium", mass:"101.07", category:"Transition Metal",
+  state:"Solid", density:"12.37 g/cm³", melting_point:"2334 °C", boiling_point:"4150 °C", color:"Silvery-white",
+  econfig:"[Kr] 4d7 5s1", protons:44, neutrons:57, electrons:44, oxidation_states:"+3,+4,+8",
+  period:5, group:8,
+  electronegativity:"2.2", ionization_energy:"7.36 eV",
+  common_compounds:["RuO₂","RuCl₃"], reactivity:"Stable, resists corrosion",
+  uses:["Electronics","Catalysts","Alloys"], biological_role:"None",
+  industries:["Electronics","Jewelry","Chemical"],
+  year_discovered:"1844", discovered_by:"Karl Ernst Claus", name_origin:"From Latin 'Ruthenia' (Russia)",
+  fun_facts:["Improves hardness of platinum"], safety:"Some compounds toxic", abundance:"0.001 ppm"
+},
+{
+  number:45, symbol:"Rh", name:"Rhodium", mass:"102.91", category:"Transition Metal",
+  state:"Solid", density:"12.41 g/cm³", melting_point:"1964 °C", boiling_point:"3695 °C", color:"Silvery-white",
+  econfig:"[Kr] 4d8 5s1", protons:45, neutrons:58, electrons:45, oxidation_states:"+3",
+  period:5, group:9,
+  electronegativity:"2.28", ionization_energy:"7.46 eV",
+  common_compounds:["RhCl₃","Rh₂O₃"], reactivity:"Resistant to corrosion",
+  uses:["Catalytic converters","Jewelry plating"], biological_role:"None",
+  industries:["Automotive","Jewelry"],
+  year_discovered:"1803", discovered_by:"William Hyde Wollaston", name_origin:"From Greek 'rhodon' (rose-colored salts)",
+  fun_facts:["Most reflective metal"], safety:"Compounds toxic", abundance:"0.001 ppm"
+},
+{
+  number:46, symbol:"Pd", name:"Palladium", mass:"106.42", category:"Transition Metal",
+  state:"Solid", density:"12.02 g/cm³", melting_point:"1555 °C", boiling_point:"2963 °C", color:"Silvery-white",
+  econfig:"[Kr] 4d10", protons:46, neutrons:60, electrons:46, oxidation_states:"+2,+4",
+  period:5, group:10,
+  electronegativity:"2.2", ionization_energy:"8.34 eV",
+  common_compounds:["PdCl₂","PdO"], reactivity:"Absorbs hydrogen easily",
+  uses:["Catalysts","Electronics","Jewelry"], biological_role:"None",
+  industries:["Automotive","Electronics"],
+  year_discovered:"1803", discovered_by:"William Hyde Wollaston", name_origin:"Named after asteroid Pallas",
+  fun_facts:["Can absorb 900 times its volume of hydrogen"], safety:"Dust can be harmful", abundance:"0.015 ppm"
+},
+{
+  number:47, symbol:"Ag", name:"Silver", mass:"107.87", category:"Transition Metal",
+  state:"Solid", density:"10.49 g/cm³", melting_point:"961.8 °C", boiling_point:"2162 °C", color:"Shiny metallic white",
+  econfig:"[Kr] 4d10 5s1", protons:47, neutrons:61, electrons:47, oxidation_states:"+1",
+  period:5, group:11,
+  electronegativity:"1.93", ionization_energy:"7.576 eV",
+  common_compounds:["AgNO₃","AgCl"], reactivity:"Tarnishes with sulfur",
+  uses:["Coins","Jewelry","Electronics","Photography"], biological_role:"None",
+  industries:["Finance","Electronics","Medicine"],
+  year_discovered:"Ancient", discovered_by:"Unknown", name_origin:"From Anglo-Saxon 'seolfor'",
+  fun_facts:["Best electrical conductor"], safety:"Compounds can be toxic (argyria)", abundance:"0.075 ppm"
+},
+{
+  number:48, symbol:"Cd", name:"Cadmium", mass:"112.41", category:"Transition Metal",
+  state:"Solid", density:"8.65 g/cm³", melting_point:"321 °C", boiling_point:"767 °C", color:"Silvery-blue",
+  econfig:"[Kr] 4d10 5s2", protons:48, neutrons:64, electrons:48, oxidation_states:"+2",
+  period:5, group:12,
+  electronegativity:"1.69", ionization_energy:"8.993 eV",
+  common_compounds:["CdS","CdO"], reactivity:"Forms toxic compounds",
+  uses:["Batteries (NiCd)","Pigments","Electroplating"], biological_role:"Toxic",
+  industries:["Batteries","Pigments"],
+  year_discovered:"1817", discovered_by:"Friedrich Stromeyer", name_origin:"From Latin 'cadmia' (calamine)",
+  fun_facts:["Highly toxic heavy metal"], safety:"Very toxic", abundance:"0.1 ppm"
+},
+{
+  number:49, symbol:"In", name:"Indium", mass:"114.82", category:"Post-transition Metal",
+  state:"Solid", density:"7.31 g/cm³", melting_point:"156.6 °C", boiling_point:"2072 °C", color:"Silvery-white",
+  econfig:"[Kr] 4d10 5s2 5p1", protons:49, neutrons:66, electrons:49, oxidation_states:"+3,+1",
+  period:5, group:13,
+  electronegativity:"1.78", ionization_energy:"5.786 eV",
+  common_compounds:["In₂O₃","InCl₃"], reactivity:"Moderate",
+  uses:["Touchscreens","Alloys","Semiconductors"], biological_role:"None",
+  industries:["Electronics","Alloys"],
+  year_discovered:"1863", discovered_by:"Ferdinand Reich & Hieronymous Richter", name_origin:"From Latin 'indicum' (indigo blue line in spectrum)",
+  fun_facts:["Soft enough to be cut with a knife"], safety:"Low toxicity, compounds harmful", abundance:"0.25 ppm"
+},
+{
+  number:50, symbol:"Sn", name:"Tin", mass:"118.71", category:"Post-transition Metal",
+  state:"Solid", density:"7.31 g/cm³", melting_point:"231.9 °C", boiling_point:"2602 °C", color:"Silvery-white",
+  econfig:"[Kr] 4d10 5s2 5p2", protons:50, neutrons:69, electrons:50, oxidation_states:"+4,+2",
+  period:5, group:14,
+  electronegativity:"1.96", ionization_energy:"7.344 eV",
+  common_compounds:["SnO₂","SnCl₂"], reactivity:"Resists corrosion",
+  uses:["Solder","Coatings for cans","Alloys (bronze)"], biological_role:"Trace amounts beneficial",
+  industries:["Food packaging","Electronics","Construction"],
+  year_discovered:"Ancient", discovered_by:"Unknown", name_origin:"From Anglo-Saxon 'tin'",
+  fun_facts:["Used since Bronze Age"], safety:"Low toxicity, organotin compounds toxic", abundance:"2.3 ppm"
+},
+{
+  number: 51, symbol:"Sb", name:"Antimony", mass:"121.760", category:"Metalloid",
+  state:"Solid", density:"6.697 g/cm³", melting_point:"630.63 °C", boiling_point:"1587 °C", color:"Silvery-gray",
+  econfig:"[Kr] 4d10 5s2 5p3", protons:51, neutrons:71, electrons:51, oxidation_states:"-3, +3, +5",
+  period:5, group:15,
+  electronegativity:"2.05", ionization_energy:"8.6084 eV",
+  common_compounds:["Sb2O3","SbCl3"], reactivity:"Moderate",
+  uses:["Flame retardants","Semiconductors","Alloys"], biological_role:"No essential role; some toxicity", industries:["Electronics","Metallurgy"],
+  year_discovered:"Ancient", discovered_by:"Known to ancients", name_origin:"Greek 'anti-monos' (not alone)",
+  fun_facts:["Used as a cosmetic in ancient Egypt"], safety:"Toxic if ingested or inhaled", abundance:"~0.00002% of Earth's crust"
+},
+{
+  number: 52, symbol:"Te", name:"Tellurium", mass:"127.60", category:"Metalloid",
+  state:"Solid", density:"6.24 g/cm³", melting_point:"449.51 °C", boiling_point:"988 °C", color:"Silvery-white",
+  econfig:"[Kr] 4d10 5s2 5p4", protons:52, neutrons:76, electrons:52, oxidation_states:"-2, +2, +4, +6",
+  period:5, group:16,
+  electronegativity:"2.1", ionization_energy:"9.0096 eV",
+  common_compounds:["H2Te","TeO2"], reactivity:"Moderate",
+  uses:["Thermoelectric devices","Alloys"], biological_role:"Not essential; toxic in quantity", industries:["Electronics","Glass"],
+  year_discovered:"1782", discovered_by:"Franz-Joseph Müller von Reichenstein", name_origin:"Latin 'tellus' (earth)",
+  fun_facts:["Can make breath smell like garlic"], safety:"Toxic in excess", abundance:"~0.0001% of Earth's crust"
+},
+{
+  number: 53, symbol:"I", name:"Iodine", mass:"126.90447", category:"Halogen",
+  state:"Solid", density:"4.933 g/cm³", melting_point:"113.7 °C", boiling_point:"184.3 °C (sublimes)", color:"Dark violet",
+  econfig:"[Kr] 4d10 5s2 5p5", protons:53, neutrons:74, electrons:53, oxidation_states:"-1, +1, +3, +5, +7",
+  period:5, group:17,
+  electronegativity:"2.66", ionization_energy:"10.4513 eV",
+  common_compounds:["KI","I2","NaI"], reactivity:"High (halogen chemistry)",
+  uses:["Disinfectants","Medical imaging","Nutrient (iodized salt)"], biological_role:"Essential for thyroid hormones", industries:["Medicine","Food","Chemicals"],
+  year_discovered:"1811", discovered_by:"Bernard Courtois", name_origin:"Greek 'ioeides' (violet colored)",
+  fun_facts:["Essential trace element in human diet"], safety:"Can be toxic in high doses", abundance:"~0.000049% of Earth's crust"
+},
+{
+  number: 54, symbol:"Xe", name:"Xenon", mass:"131.293", category:"Noble Gas",
+  state:"Gas", density:"0.005887 g/cm³", melting_point:"-111.8 °C", boiling_point:"-108.1 °C", color:"Colorless",
+  econfig:"[Kr] 4d10 5s2 5p6", protons:54, neutrons:77, electrons:54, oxidation_states:"0, +2, +4, +6, +8",
+  period:5, group:18,
+  electronegativity:"2.6", ionization_energy:"12.1298 eV",
+  common_compounds:["XeF2","XeF4","XeO3"], reactivity:"Inert (but forms compounds under special conditions)",
+  uses:["Lighting (flash lamps)","Anesthetics","Ion propulsion"], biological_role:"None", industries:["Lighting","Space technology","Medicine"],
+  year_discovered:"1898", discovered_by:"William Ramsay & Morris Travers", name_origin:"Greek 'xenos' (stranger)",
+  fun_facts:["One of the few noble gases that forms stable compounds"], safety:"Generally safe; anesthetic effects", abundance:"~0.0000087% of Earth's atmosphere"
+},
+{
+  number: 55, symbol:"Cs", name:"Cesium", mass:"132.90545196", category:"Alkali Metal",
+  state:"Solid", density:"1.93 g/cm³", melting_point:"28.5 °C", boiling_point:"671 °C", color:"Silvery-gold",
+  econfig:"[Xe] 6s1", protons:55, neutrons:78, electrons:55, oxidation_states:"+1",
+  period:6, group:1,
+  electronegativity:"0.79", ionization_energy:"3.8939 eV",
+  common_compounds:["CsCl","CsNO3"], reactivity:"Extremely reactive",
+  uses:["Atomic clocks","Research","Electronics"], biological_role:"No role; toxic in high doses", industries:["Timekeeping","Defense","Electronics"],
+  year_discovered:"1860", discovered_by:"Robert Bunsen & Gustav Kirchhoff", name_origin:"Latin 'caesius' (sky blue, from flame color)",
+  fun_facts:["Used in the most accurate atomic clocks"], safety:"Highly reactive with water; must be handled carefully", abundance:"~0.00019% of Earth's crust"
+},
+{
+  number: 56, symbol:"Ba", name:"Barium", mass:"137.327", category:"Alkaline Earth Metal",
+  state:"Solid", density:"3.62 g/cm³", melting_point:"727 °C", boiling_point:"1845 °C", color:"Silvery-white",
+  econfig:"[Xe] 6s2", protons:56, neutrons:81, electrons:56, oxidation_states:"+2",
+  period:6, group:2,
+  electronegativity:"0.89", ionization_energy:"5.2117 eV",
+  common_compounds:["BaSO4","BaCl2"], reactivity:"Reacts with water and air",
+  uses:["Medical imaging (barium meals)","Fireworks (green color)"], biological_role:"Not essential; some compounds toxic", industries:["Medicine","Fireworks","Glass"],
+  year_discovered:"1808", discovered_by:"Humphry Davy", name_origin:"Greek 'barys' (heavy)",
+  fun_facts:["BaSO4 is used in X-ray imaging of digestive system"], safety:"Toxic in soluble form", abundance:"~0.042% of Earth's crust"
+},
+{
+  number: 57, symbol:"La", name:"Lanthanum", mass:"138.90547", category:"Lanthanide",
+  state:"Solid", density:"6.15 g/cm³", melting_point:"920 °C", boiling_point:"3464 °C", color:"Silvery-white",
+  econfig:"[Xe] 5d1 6s2", protons:57, neutrons:82, electrons:57, oxidation_states:"+3",
+  period:6, group:3,
+  electronegativity:"1.1", ionization_energy:"5.5769 eV",
+  common_compounds:["La2O3","LaCl3"], reactivity:"Moderate",
+  uses:["Camera lenses","Hydrogen storage","Lighting"], biological_role:"No essential role", industries:["Optics","Batteries","Metallurgy"],
+  year_discovered:"1839", discovered_by:"Carl Gustaf Mosander", name_origin:"Greek 'lanthanein' (to lie hidden)",
+  fun_facts:["Used in hybrid car batteries"], safety:"Low toxicity", abundance:"~0.0034% of Earth's crust"
+},
+{
+  number: 58, symbol:"Ce", name:"Cerium", mass:"140.116", category:"Lanthanide",
+  state:"Solid", density:"6.77 g/cm³", melting_point:"798 °C", boiling_point:"3443 °C", color:"Silvery-white",
+  econfig:"[Xe] 4f1 5d1 6s2", protons:58, neutrons:82, electrons:58, oxidation_states:"+3, +4",
+  period:6, group:3,
+  electronegativity:"1.12", ionization_energy:"5.5387 eV",
+  common_compounds:["CeO2","CeCl3"], reactivity:"Moderate",
+  uses:["Polishing powders","Catalytic converters","Glass additives"], biological_role:"No essential role", industries:["Automotive","Glass","Metallurgy"],
+  year_discovered:"1803", discovered_by:"Martin Heinrich Klaproth & others", name_origin:"Named after asteroid Ceres",
+  fun_facts:["Used in lighter flints"], safety:"Low toxicity", abundance:"~0.0046% of Earth's crust"
+},
+{
+  number: 59, symbol:"Pr", name:"Praseodymium", mass:"140.90766", category:"Lanthanide",
+  state:"Solid", density:"6.77 g/cm³", melting_point:"931 °C", boiling_point:"3520 °C", color:"Silvery",
+  econfig:"[Xe] 4f3 6s2", protons:59, neutrons:82, electrons:59, oxidation_states:"+3",
+  period:6, group:3,
+  electronegativity:"1.13", ionization_energy:"5.473 eV",
+  common_compounds:["Pr6O11","PrCl3"], reactivity:"Moderate",
+  uses:["Magnets","Glass coloring","Alloys"], biological_role:"No essential role", industries:["Electronics","Glass","Metallurgy"],
+  year_discovered:"1885", discovered_by:"Carl Auer von Welsbach", name_origin:"Greek 'prasios didymos' (green twin)",
+  fun_facts:["Used in aircraft engines alloys"], safety:"Low toxicity", abundance:"~0.00086% of Earth's crust"
+},
+{
+  number: 60, symbol:"Nd", name:"Neodymium", mass:"144.242", category:"Lanthanide",
+  state:"Solid", density:"7.01 g/cm³", melting_point:"1024 °C", boiling_point:"3074 °C", color:"Silvery-white",
+  econfig:"[Xe] 4f4 6s2", protons:60, neutrons:84, electrons:60, oxidation_states:"+3",
+  period:6, group:3,
+  electronegativity:"1.14", ionization_energy:"5.525 eV",
+  common_compounds:["Nd2O3","NdCl3"], reactivity:"Moderate",
+  uses:["Powerful magnets","Lasers","Glass coloration"], biological_role:"No essential role", industries:["Electronics","Energy","Optics"],
+  year_discovered:"1885", discovered_by:"Carl Auer von Welsbach", name_origin:"Greek 'neos didymos' (new twin)",
+  fun_facts:["Magnets are key for wind turbines and headphones"], safety:"Low toxicity", abundance:"~0.0033% of Earth's crust"
+},
+{
+      number:61, symbol:"Pm", name:"Promethium", mass:"145", category:"Lanthanide",
+      state:"Solid", density:"7.26 g/cm³", melting_point:"1042 °C", boiling_point:"3000 °C", color:"Metallic",
+      econfig:"[Xe] 4f5 6s2", protons:61, neutrons:84, electrons:61, oxidation_states:"+3",
+      period:6, group:"Lanthanides",
+      electronegativity:"—", ionization_energy:"5.55 eV",
+      common_compounds:["PmCl3","Pm2O3"], reactivity:"Similar to other lanthanides",
+      uses:["Nuclear batteries","Research"], biological_role:"None (radioactive)", industries:["Nuclear"],
+      year_discovered:"1945", discovered_by:"J.A. Marinsky, L.E. Glendenin, C.D. Coryell", name_origin:"From Prometheus (Greek Titan)",
+      fun_facts:["Only radioactive lanthanide with no stable isotopes"], safety:"Highly radioactive", abundance:"Trace (synthetic in labs)"
+    },
+    {
+      number:62, symbol:"Sm", name:"Samarium", mass:"150.36", category:"Lanthanide",
+      state:"Solid", density:"7.52 g/cm³", melting_point:"1072 °C", boiling_point:"1900 °C", color:"Silvery-white",
+      econfig:"[Xe] 4f6 6s2", protons:62, neutrons:88, electrons:62, oxidation_states:"+2,+3",
+      period:6, group:"Lanthanides",
+      electronegativity:"1.17", ionization_energy:"5.64 eV",
+      common_compounds:["Sm2O3","SmCl3"], reactivity:"Moderate (oxidizes in air)",
+      uses:["Magnets","Nuclear reactors","Catalysts"], biological_role:"None", industries:["Electronics","Energy"],
+      year_discovered:"1853", discovered_by:"Jean Charles Galissard de Marignac", name_origin:"From mineral samarskite",
+      fun_facts:["Used in headphones and small motors"], safety:"Low toxicity", abundance:"~7 ppm in crust"
+    },
+    {
+      number:63, symbol:"Eu", name:"Europium", mass:"151.964", category:"Lanthanide",
+      state:"Solid", density:"5.24 g/cm³", melting_point:"822 °C", boiling_point:"1529 °C", color:"Silvery-white",
+      econfig:"[Xe] 4f7 6s2", protons:63, neutrons:89, electrons:63, oxidation_states:"+2,+3",
+      period:6, group:"Lanthanides",
+      electronegativity:"1.20", ionization_energy:"5.67 eV",
+      common_compounds:["Eu2O3","EuCl3"], reactivity:"Reactive, oxidizes quickly",
+      uses:["Phosphors in TV & LED screens","Lasers"], biological_role:"None", industries:["Electronics","Lighting"],
+      year_discovered:"1901", discovered_by:"Eugène-Anatole Demarçay", name_origin:"From Europe",
+      fun_facts:["Gives red color to TV screens"], safety:"Low to moderate toxicity", abundance:"~2 ppm in crust"
+    },
+    {
+      number:64, symbol:"Gd", name:"Gadolinium", mass:"157.25", category:"Lanthanide",
+      state:"Solid", density:"7.90 g/cm³", melting_point:"1313 °C", boiling_point:"3273 °C", color:"Silvery-white",
+      econfig:"[Xe] 4f7 5d1 6s2", protons:64, neutrons:93, electrons:64, oxidation_states:"+3",
+      period:6, group:"Lanthanides",
+      electronegativity:"1.20", ionization_energy:"6.15 eV",
+      common_compounds:["Gd2O3","GdCl3"], reactivity:"Moderate",
+      uses:["MRI contrast agents","Magnets","Nuclear reactors"], biological_role:"None", industries:["Medical","Energy"],
+      year_discovered:"1880", discovered_by:"Jean Charles Galissard de Marignac", name_origin:"Named after Johan Gadolin",
+      fun_facts:["Strong neutron absorber"], safety:"Some salts toxic", abundance:"~6 ppm in crust"
+    },
+    {
+      number:65, symbol:"Tb", name:"Terbium", mass:"158.925", category:"Lanthanide",
+      state:"Solid", density:"8.23 g/cm³", melting_point:"1356 °C", boiling_point:"3230 °C", color:"Silvery-gray",
+      econfig:"[Xe] 4f9 6s2", protons:65, neutrons:94, electrons:65, oxidation_states:"+3,+4",
+      period:6, group:"Lanthanides",
+      electronegativity:"1.20", ionization_energy:"5.86 eV",
+      common_compounds:["Tb4O7","TbCl3"], reactivity:"Moderate",
+      uses:["Green phosphors","Magnets","Lasers"], biological_role:"None", industries:["Electronics","Lighting"],
+      year_discovered:"1843", discovered_by:"Carl Gustaf Mosander", name_origin:"From Ytterby, Sweden",
+      fun_facts:["Emits bright green light in phosphors"], safety:"Low toxicity", abundance:"~1.2 ppm in crust"
+    },
+    {
+      number:66, symbol:"Dy", name:"Dysprosium", mass:"162.500", category:"Lanthanide",
+      state:"Solid", density:"8.54 g/cm³", melting_point:"1407 °C", boiling_point:"2567 °C", color:"Silvery-white",
+      econfig:"[Xe] 4f10 6s2", protons:66, neutrons:96, electrons:66, oxidation_states:"+3",
+      period:6, group:"Lanthanides",
+      electronegativity:"1.22", ionization_energy:"5.94 eV",
+      common_compounds:["Dy2O3","DyCl3"], reactivity:"Moderate",
+      uses:["Magnets","Nuclear control rods"], biological_role:"None", industries:["Energy","Electronics"],
+      year_discovered:"1886", discovered_by:"Paul Émile Lecoq de Boisbaudran", name_origin:"From Greek 'dysprositos' (hard to get)",
+      fun_facts:["Used in hybrid car motors"], safety:"Low toxicity", abundance:"~5.2 ppm in crust"
+    },
+    {
+      number:67, symbol:"Ho", name:"Holmium", mass:"164.930", category:"Lanthanide",
+      state:"Solid", density:"8.79 g/cm³", melting_point:"1474 °C", boiling_point:"2700 °C", color:"Silvery-white",
+      econfig:"[Xe] 4f11 6s2", protons:67, neutrons:98, electrons:67, oxidation_states:"+3",
+      period:6, group:"Lanthanides",
+      electronegativity:"1.23", ionization_energy:"6.02 eV",
+      common_compounds:["Ho2O3","HoCl3"], reactivity:"Moderate",
+      uses:["Magnets","Lasers"], biological_role:"None", industries:["Medical","Electronics"],
+      year_discovered:"1878", discovered_by:"Marc Delafontaine, Jacques-Louis Soret", name_origin:"From Stockholm (Holmia in Latin)",
+      fun_facts:["Strongest magnetic moment of any element"], safety:"Low toxicity", abundance:"~1.3 ppm in crust"
+    },
+    {
+      number:68, symbol:"Er", name:"Erbium", mass:"167.259", category:"Lanthanide",
+      state:"Solid", density:"9.07 g/cm³", melting_point:"1529 °C", boiling_point:"2868 °C", color:"Silvery-white",
+      econfig:"[Xe] 4f12 6s2", protons:68, neutrons:99, electrons:68, oxidation_states:"+3",
+      period:6, group:"Lanthanides",
+      electronegativity:"1.24", ionization_energy:"6.11 eV",
+      common_compounds:["Er2O3","ErCl3"], reactivity:"Moderate",
+      uses:["Fiber optics","Lasers"], biological_role:"None", industries:["Telecom","Medical"],
+      year_discovered:"1843", discovered_by:"Carl Gustaf Mosander", name_origin:"From Ytterby, Sweden",
+      fun_facts:["Colors glass and ceramics pink"], safety:"Low toxicity", abundance:"~3.5 ppm in crust"
+    },
+    {
+      number:69, symbol:"Tm", name:"Thulium", mass:"168.934", category:"Lanthanide",
+      state:"Solid", density:"9.32 g/cm³", melting_point:"1545 °C", boiling_point:"1950 °C", color:"Silvery-gray",
+      econfig:"[Xe] 4f13 6s2", protons:69, neutrons:100, electrons:69, oxidation_states:"+3",
+      period:6, group:"Lanthanides",
+      electronegativity:"1.25", ionization_energy:"6.18 eV",
+      common_compounds:["Tm2O3","TmCl3"], reactivity:"Moderate",
+      uses:["Portable X-ray machines","Lasers"], biological_role:"None", industries:["Medical","Electronics"],
+      year_discovered:"1879", discovered_by:"Per Teodor Cleve", name_origin:"From Thule (ancient place in Europe)",
+      fun_facts:["Least abundant lanthanide (except Pm)"], safety:"Low toxicity", abundance:"~0.5 ppm in crust"
+    },
+    {
+      number:70, symbol:"Yb", name:"Ytterbium", mass:"173.045", category:"Lanthanide",
+      state:"Solid", density:"6.90 g/cm³", melting_point:"824 °C", boiling_point:"1196 °C", color:"Silvery-white",
+      econfig:"[Xe] 4f14 6s2", protons:70, neutrons:103, electrons:70, oxidation_states:"+2,+3",
+      period:6, group:"Lanthanides",
+      electronegativity:"1.10", ionization_energy:"6.25 eV",
+      common_compounds:["Yb2O3","YbCl3"], reactivity:"Moderate",
+      uses:["Lasers","Doping of stainless steel"], biological_role:"None", industries:["Metallurgy","Electronics"],
+      year_discovered:"1878", discovered_by:"Jean Charles Galissard de Marignac", name_origin:"From Ytterby, Sweden",
+      fun_facts:["Used in atomic clocks"], safety:"Low toxicity", abundance:"~3 ppm in crust"
+    },
+    {
+  number:71, symbol:"Lu", name:"Lutetium", mass:"174.97", category:"Lanthanide",
+  state:"Solid", density:"9.84 g/cm³", melting_point:"1663 °C", boiling_point:"3402 °C", color:"Silvery-white",
+  econfig:"[Xe] 4f14 5d1 6s2", protons:71, neutrons:104, electrons:71, oxidation_states:"+3",
+  period:6, group:3,
+  electronegativity:"1.27", ionization_energy:"5.4259 eV",
+  common_compounds:["Lu2O3"], reactivity:"Low",
+  uses:["PET scan detectors","Catalysts"], biological_role:"None", industries:["Medical imaging","Petrochemical"],
+  year_discovered:"1907", discovered_by:"Georges Urbain", name_origin:"Named after Lutetia (Paris)",
+  fun_facts:["The heaviest lanthanide"], safety:"Low toxicity", abundance:"0.0001% in Earth's crust"
+},
+{
+  number:72, symbol:"Hf", name:"Hafnium", mass:"178.49", category:"Transition Metal",
+  state:"Solid", density:"13.31 g/cm³", melting_point:"2233 °C", boiling_point:"4603 °C", color:"Grayish",
+  econfig:"[Xe] 4f14 5d2 6s2", protons:72, neutrons:106, electrons:72, oxidation_states:"+4",
+  period:6, group:4,
+  electronegativity:"1.3", ionization_energy:"6.8251 eV",
+  common_compounds:["HfO2"], reactivity:"Low",
+  uses:["Control rods in nuclear reactors","Alloys"], biological_role:"None", industries:["Nuclear","Aerospace"],
+  year_discovered:"1923", discovered_by:"Dirk Coster & George de Hevesy", name_origin:"From Latin 'Hafnia' (Copenhagen)",
+  fun_facts:["Absorbs neutrons efficiently"], safety:"Relatively safe", abundance:"0.00058% in Earth's crust"
+},
+{
+  number:73, symbol:"Ta", name:"Tantalum", mass:"180.95", category:"Transition Metal",
+  state:"Solid", density:"16.69 g/cm³", melting_point:"3017 °C", boiling_point:"5458 °C", color:"Blue-gray",
+  econfig:"[Xe] 4f14 5d3 6s2", protons:73, neutrons:108, electrons:73, oxidation_states:"+5",
+  period:6, group:5,
+  electronegativity:"1.5", ionization_energy:"7.5496 eV",
+  common_compounds:["Ta2O5"], reactivity:"Low",
+  uses:["Capacitors","Medical implants"], biological_role:"None", industries:["Electronics","Medical"],
+  year_discovered:"1802", discovered_by:"Anders Ekeberg", name_origin:"From King Tantalus (Greek mythology)",
+  fun_facts:["Extremely corrosion resistant"], safety:"Generally safe", abundance:"0.0002% in Earth's crust"
+},
+{
+  number:74, symbol:"W", name:"Tungsten", mass:"183.84", category:"Transition Metal",
+  state:"Solid", density:"19.25 g/cm³", melting_point:"3422 °C", boiling_point:"5555 °C", color:"Grayish-white",
+  econfig:"[Xe] 4f14 5d4 6s2", protons:74, neutrons:110, electrons:74, oxidation_states:"+6, +4",
+  period:6, group:6,
+  electronegativity:"2.36", ionization_energy:"7.864 eV",
+  common_compounds:["WC","WO3"], reactivity:"Low",
+  uses:["Light bulb filaments","Cutting tools"], biological_role:"None", industries:["Electronics","Metallurgy"],
+  year_discovered:"1783", discovered_by:"Fausto & Juan José Elhuyar", name_origin:"From Swedish 'tung sten' (heavy stone)",
+  fun_facts:["Highest melting point of all metals"], safety:"Dust harmful if inhaled", abundance:"0.0079% in Earth's crust"
+},
+{
+  number:75, symbol:"Re", name:"Rhenium", mass:"186.21", category:"Transition Metal",
+  state:"Solid", density:"21.02 g/cm³", melting_point:"3186 °C", boiling_point:"5596 °C", color:"Silvery-gray",
+  econfig:"[Xe] 4f14 5d5 6s2", protons:75, neutrons:111, electrons:75, oxidation_states:"+7, +4",
+  period:6, group:7,
+  electronegativity:"1.9", ionization_energy:"7.8335 eV",
+  common_compounds:["Re2O7"], reactivity:"Low",
+  uses:["Jet engines","Catalysts"], biological_role:"None", industries:["Aerospace","Petrochemical"],
+  year_discovered:"1925", discovered_by:"Ida & Walter Noddack", name_origin:"From Latin 'Rhenus' (Rhine river)",
+  fun_facts:["One of the rarest elements on Earth"], safety:"Low toxicity", abundance:"~1 ppb in Earth's crust"
+},
+{
+  number:76, symbol:"Os", name:"Osmium", mass:"190.23", category:"Transition Metal",
+  state:"Solid", density:"22.59 g/cm³", melting_point:"3033 °C", boiling_point:"5012 °C", color:"Bluish-gray",
+  econfig:"[Xe] 4f14 5d6 6s2", protons:76, neutrons:114, electrons:76, oxidation_states:"+4",
+  period:6, group:8,
+  electronegativity:"2.2", ionization_energy:"8.4382 eV",
+  common_compounds:["OsO4"], reactivity:"Moderate",
+  uses:["Fountain pen tips","Electrical contacts"], biological_role:"None", industries:["Electronics","Manufacturing"],
+  year_discovered:"1803", discovered_by:"Smithson Tennant", name_origin:"From Greek 'osme' (smell)",
+  fun_facts:["Densest naturally occurring element"], safety:"OsO4 highly toxic", abundance:"0.0002% in Earth's crust"
+},
+{
+  number:77, symbol:"Ir", name:"Iridium", mass:"192.22", category:"Transition Metal",
+  state:"Solid", density:"22.56 g/cm³", melting_point:"2446 °C", boiling_point:"4428 °C", color:"Silvery-white",
+  econfig:"[Xe] 4f14 5d7 6s2", protons:77, neutrons:115, electrons:77, oxidation_states:"+4, +3",
+  period:6, group:9,
+  electronegativity:"2.2", ionization_energy:"8.967 eV",
+  common_compounds:["IrO2"], reactivity:"Low",
+  uses:["Spark plugs","Crucibles"], biological_role:"None", industries:["Automotive","Electronics"],
+  year_discovered:"1803", discovered_by:"Smithson Tennant", name_origin:"From Greek 'iris' (rainbow)",
+  fun_facts:["Extremely corrosion resistant"], safety:"Generally safe", abundance:"0.000003% in Earth's crust"
+},
+{
+  number:78, symbol:"Pt", name:"Platinum", mass:"195.08", category:"Transition Metal",
+  state:"Solid", density:"21.45 g/cm³", melting_point:"1768 °C", boiling_point:"3825 °C", color:"Silvery-white",
+  econfig:"[Xe] 4f14 5d9 6s1", protons:78, neutrons:117, electrons:78, oxidation_states:"+2, +4",
+  period:6, group:10,
+  electronegativity:"2.28", ionization_energy:"8.9587 eV",
+  common_compounds:["PtCl2","PtO2"], reactivity:"Low",
+  uses:["Catalytic converters","Jewelry"], biological_role:"None", industries:["Automotive","Jewelry","Medical"],
+  year_discovered:"1735", discovered_by:"Antonio de Ulloa", name_origin:"From Spanish 'platina' (little silver)",
+  fun_facts:["Widely used in cancer drugs"], safety:"Generally safe", abundance:"0.005 ppm in Earth's crust"
+},
+{
+  number:79, symbol:"Au", name:"Gold", mass:"196.97", category:"Transition Metal",
+  state:"Solid", density:"19.32 g/cm³", melting_point:"1064 °C", boiling_point:"2970 °C", color:"Yellow metallic",
+  econfig:"[Xe] 4f14 5d10 6s1", protons:79, neutrons:118, electrons:79, oxidation_states:"+3, +1",
+  period:6, group:11,
+  electronegativity:"2.54", ionization_energy:"9.2255 eV",
+  common_compounds:["AuCl3","Au2O3"], reactivity:"Very low",
+  uses:["Jewelry","Electronics","Finance"], biological_role:"None", industries:["Jewelry","Electronics","Medicine"],
+  year_discovered:"Ancient", discovered_by:"Unknown", name_origin:"From Old English 'geolu' (yellow)",
+  fun_facts:["Highly malleable and ductile"], safety:"Non-toxic", abundance:"0.004 ppm in Earth's crust"
+},
+{
+  number:80, symbol:"Hg", name:"Mercury", mass:"200.59", category:"Transition Metal",
+  state:"Liquid", density:"13.53 g/cm³", melting_point:"-38.83 °C", boiling_point:"356.73 °C", color:"Silvery liquid",
+  econfig:"[Xe] 4f14 5d10 6s2", protons:80, neutrons:121, electrons:80, oxidation_states:"+2, +1",
+  period:6, group:12,
+  electronegativity:"2.0", ionization_energy:"10.4375 eV",
+  common_compounds:["HgCl2","HgS"], reactivity:"Moderate",
+  uses:["Thermometers","Dental amalgams"], biological_role:"Toxic", industries:["Healthcare","Mining"],
+  year_discovered:"Ancient", discovered_by:"Unknown", name_origin:"Named after Roman god Mercury",
+  fun_facts:["Only metal liquid at room temp"], safety:"Highly toxic", abundance:"0.08 ppm in Earth's crust"
+},
+{
+  number:81, symbol:"Tl", name:"Thallium", mass:"204.38", category:"Post-transition Metal",
+  state:"Solid", density:"11.85 g/cm³", melting_point:"304 °C", boiling_point:"1473 °C", color:"Silvery-white",
+  econfig:"[Xe] 4f14 5d10 6s2 6p1", protons:81, neutrons:123, electrons:81, oxidation_states:"+1, +3",
+  period:6, group:13,
+  electronegativity:"1.62", ionization_energy:"6.108 eV",
+  common_compounds:["Tl2O","TlCl"], reactivity:"Moderate",
+  uses:["Electronics","Glass manufacturing"], biological_role:"Toxic", industries:["Electronics","Glass"],
+  year_discovered:"1861", discovered_by:"William Crookes", name_origin:"Greek 'thallos' (green twig)",
+  fun_facts:["Forms green spectral line"], safety:"Highly toxic", abundance:"0.85 mg/kg"
+},
+{
+  number:82, symbol:"Pb", name:"Lead", mass:"207.2", category:"Post-transition Metal",
+  state:"Solid", density:"11.34 g/cm³", melting_point:"327.5 °C", boiling_point:"1749 °C", color:"Bluish-gray",
+  econfig:"[Xe] 4f14 5d10 6s2 6p2", protons:82, neutrons:125, electrons:82, oxidation_states:"+2, +4",
+  period:6, group:14,
+  electronegativity:"2.33", ionization_energy:"7.416 eV",
+  common_compounds:["PbO","PbS"], reactivity:"Low",
+  uses:["Batteries","Radiation shielding"], biological_role:"Toxic", industries:["Batteries","Construction"],
+  year_discovered:"Ancient", discovered_by:"Prehistoric", name_origin:"Anglo-Saxon 'lead'",
+  fun_facts:["Used in Roman pipes"], safety:"Highly toxic, neurotoxin", abundance:"14 mg/kg"
+},
+{
+  number:83, symbol:"Bi", name:"Bismuth", mass:"208.980", category:"Post-transition Metal",
+  state:"Solid", density:"9.78 g/cm³", melting_point:"271.4 °C", boiling_point:"1564 °C", color:"Pinkish-white",
+  econfig:"[Xe] 4f14 5d10 6s2 6p3", protons:83, neutrons:126, electrons:83, oxidation_states:"+3, +5",
+  period:6, group:15,
+  electronegativity:"2.02", ionization_energy:"7.285 eV",
+  common_compounds:["Bi2O3","BiCl3"], reactivity:"Low",
+  uses:["Medicines","Alloys"], biological_role:"Low toxicity", industries:["Pharmaceuticals","Metallurgy"],
+  year_discovered:"1753", discovered_by:"Claude Geoffroy the Younger", name_origin:"German 'Wismut'",
+  fun_facts:["Heaviest stable element"], safety:"Relatively safe", abundance:"0.009 mg/kg"
+},
+{
+  number:84, symbol:"Po", name:"Polonium", mass:"209", category:"Metalloid",
+  state:"Solid", density:"9.2 g/cm³", melting_point:"254 °C", boiling_point:"962 °C", color:"Silvery",
+  econfig:"[Xe] 4f14 5d10 6s2 6p4", protons:84, neutrons:125, electrons:84, oxidation_states:"+2, +4",
+  period:6, group:16,
+  electronegativity:"2.0", ionization_energy:"8.417 eV",
+  common_compounds:["PoO2"], reactivity:"High (radioactive)",
+  uses:["Antistatic devices","Heat sources"], biological_role:"Toxic, radioactive", industries:["Nuclear"],
+  year_discovered:"1898", discovered_by:"Marie Curie", name_origin:"Named after Poland",
+  fun_facts:["Extremely radioactive"], safety:"Deadly toxic, radioactive", abundance:"Trace"
+},
+{
+  number:85, symbol:"At", name:"Astatine", mass:"210", category:"Halogen",
+  state:"Solid", density:"~7 g/cm³", melting_point:"302 °C", boiling_point:"337 °C", color:"Unknown (likely black)",
+  econfig:"[Xe] 4f14 5d10 6s2 6p5", protons:85, neutrons:125, electrons:85, oxidation_states:"-1, +1, +3, +5, +7",
+  period:6, group:17,
+  electronegativity:"2.2", ionization_energy:"9.3 eV",
+  common_compounds:["AtI","AtBr"], reactivity:"Moderate",
+  uses:["Medical research"], biological_role:"None (radioactive)", industries:["Nuclear medicine"],
+  year_discovered:"1940", discovered_by:"Dale R. Corson et al.", name_origin:"Greek 'astatos' (unstable)",
+  fun_facts:["Rarest naturally occurring element on Earth"], safety:"Highly radioactive", abundance:"Trace"
+},
+{
+  number:86, symbol:"Rn", name:"Radon", mass:"222", category:"Noble Gas",
+  state:"Gas", density:"9.73 g/L", melting_point:"-71 °C", boiling_point:"-61.7 °C", color:"Colorless (radioactive gas)",
+  econfig:"[Xe] 4f14 5d10 6s2 6p6", protons:86, neutrons:136, electrons:86, oxidation_states:"0",
+  period:6, group:18,
+  electronegativity:"2.2", ionization_energy:"10.748 eV",
+  common_compounds:[], reactivity:"Inert",
+  uses:["Cancer therapy (radioisotope)"], biological_role:"None (radioactive)", industries:["Medical"],
+  year_discovered:"1900", discovered_by:"Friedrich Dorn", name_origin:"From 'radium'",
+  fun_facts:["Second leading cause of lung cancer"], safety:"Radioactive, inhalation hazard", abundance:"Trace in air"
+},
+{
+  number:87, symbol:"Fr", name:"Francium", mass:"223", category:"Alkali Metal",
+  state:"Solid", density:"~1.87 g/cm³", melting_point:"27 °C (estimated)", boiling_point:"677 °C (estimated)", color:"Unknown",
+  econfig:"[Rn] 7s1", protons:87, neutrons:136, electrons:87, oxidation_states:"+1",
+  period:7, group:1,
+  electronegativity:"0.7", ionization_energy:"4.072 eV",
+  common_compounds:["FrCl","FrNO3"], reactivity:"Extremely high",
+  uses:["Research only"], biological_role:"None", industries:["Nuclear research"],
+  year_discovered:"1939", discovered_by:"Marguerite Perey", name_origin:"Named after France",
+  fun_facts:["Most unstable naturally occurring element"], safety:"Extremely radioactive", abundance:"Trace"
+},
+{
+  number:88, symbol:"Ra", name:"Radium", mass:"226", category:"Alkaline Earth Metal",
+  state:"Solid", density:"5.5 g/cm³", melting_point:"700 °C", boiling_point:"1737 °C", color:"Silvery white (blackens with air)",
+  econfig:"[Rn] 7s2", protons:88, neutrons:138, electrons:88, oxidation_states:"+2",
+  period:7, group:2,
+  electronegativity:"0.9", ionization_energy:"5.279 eV",
+  common_compounds:["RaCl2","RaSO4"], reactivity:"High",
+  uses:["Cancer treatment (historical)"], biological_role:"None (radioactive)", industries:["Nuclear"],
+  year_discovered:"1898", discovered_by:"Marie & Pierre Curie", name_origin:"Latin 'radius' (ray)",
+  fun_facts:["Glows in dark due to radioactivity"], safety:"Extremely radioactive", abundance:"Trace"
+},
+{
+  number:89, symbol:"Ac", name:"Actinium", mass:"227", category:"Actinide",
+  state:"Solid", density:"10.07 g/cm³", melting_point:"1050 °C", boiling_point:"3200 °C", color:"Silvery-white",
+  econfig:"[Rn] 6d1 7s2", protons:89, neutrons:138, electrons:89, oxidation_states:"+3",
+  period:7, group:3,
+  electronegativity:"1.1", ionization_energy:"5.17 eV",
+  common_compounds:["AcCl3","Ac2O3"], reactivity:"High",
+  uses:["Neutron sources","Medical research"], biological_role:"None (radioactive)", industries:["Nuclear"],
+  year_discovered:"1899", discovered_by:"Friedrich Oskar Giesel", name_origin:"Greek 'aktinos' (ray)",
+  fun_facts:["First element of actinide series"], safety:"Highly radioactive", abundance:"Trace"
+},
+{
+  number:90, symbol:"Th", name:"Thorium", mass:"232.0377", category:"Actinide",
+  state:"Solid", density:"11.72 g/cm³", melting_point:"1750 °C", boiling_point:"4788 °C", color:"Silvery-white",
+  econfig:"[Rn] 6d2 7s2", protons:90, neutrons:142, electrons:90, oxidation_states:"+4",
+  period:7, group:3,
+  electronegativity:"1.3", ionization_energy:"6.08 eV",
+  common_compounds:["ThO2","ThCl4"], reactivity:"Moderate",
+  uses:["Nuclear fuel","Gas mantles"], biological_role:"None (radioactive)", industries:["Nuclear","Lighting"],
+  year_discovered:"1828", discovered_by:"Jöns Jakob Berzelius", name_origin:"Named after Thor (Norse god)",
+  fun_facts:["Potential fuel for next-gen reactors"], safety:"Radioactive", abundance:"9.6 ppm in Earth's crust"
+},
+    {
+      number:91, symbol:"Pa", name:"Protactinium", mass:"231.03588", category:"Actinide",
+      state:"Solid", density:"15.37 g/cm³", melting_point:"1572 °C", boiling_point:"Not well defined", color:"Silvery gray",
+      econfig:"[Rn] 5f2 6d1 7s2", protons:91, neutrons:140, electrons:91, oxidation_states:"+5, +4",
+      period:7, group:3,
+      electronegativity:"1.5", ionization_energy:"5.89 eV",
+      common_compounds:["Pa₂O₅"], reactivity:"Radioactive, chemically similar to uranium",
+      uses:["Scientific research"], biological_role:"None (toxic, radioactive)", industries:["Nuclear research"],
+      year_discovered:"1913", discovered_by:"Kasimir Fajans & Oswald Helmuth Göhring", name_origin:"From 'Proteus', Greek god of change",
+      fun_facts:["Extremely rare in Earth's crust"], safety:"Highly radioactive and toxic", abundance:"~0.0000001% of Earth's crust"
+    },
+    {
+      number:92, symbol:"U", name:"Uranium", mass:"238.02891", category:"Actinide",
+      state:"Solid", density:"18.95 g/cm³", melting_point:"1135 °C", boiling_point:"4131 °C", color:"Silvery gray",
+      econfig:"[Rn] 5f3 6d1 7s2", protons:92, neutrons:146, electrons:92, oxidation_states:"+6, +5, +4, +3",
+      period:7, group:3,
+      electronegativity:"1.38", ionization_energy:"6.19 eV",
+      common_compounds:["UO₂","UF₆"], reactivity:"Reacts slowly with oxygen, highly radioactive",
+      uses:["Nuclear fuel (uranium-235)","Military (depleted uranium armor)"], biological_role:"None (toxic)", industries:["Energy","Defense"],
+      year_discovered:"1789", discovered_by:"Martin Heinrich Klaproth", name_origin:"Named after the planet Uranus",
+      fun_facts:["Main fuel for nuclear power plants"], safety:"Radioactive, chemical toxicity as well", abundance:"~2.7 ppm in Earth's crust"
+    },
+    {
+      number:93, symbol:"Np", name:"Neptunium", mass:"237", category:"Actinide",
+      state:"Solid", density:"20.25 g/cm³", melting_point:"644 °C", boiling_point:"3902 °C", color:"Silvery metallic",
+      econfig:"[Rn] 5f4 6d1 7s2", protons:93, neutrons:144, electrons:93, oxidation_states:"+5, +6, +4, +3",
+      period:7, group:3,
+      electronegativity:"1.36", ionization_energy:"6.27 eV",
+      common_compounds:["NpO₂","NpF₆"], reactivity:"Chemically reactive, radioactive",
+      uses:["Research","Potential future nuclear fuel"], biological_role:"None", industries:["Nuclear research"],
+      year_discovered:"1940", discovered_by:"Edwin McMillan & Philip Abelson", name_origin:"Named after Neptune, next planet after Uranus",
+      fun_facts:["First transuranium element discovered"], safety:"Highly radioactive", abundance:"Trace in uranium ores"
+    },
+    {
+      number:94, symbol:"Pu", name:"Plutonium", mass:"244", category:"Actinide",
+      state:"Solid", density:"19.84 g/cm³", melting_point:"639 °C", boiling_point:"3228 °C", color:"Silvery, tarnishes quickly",
+      econfig:"[Rn] 5f6 7s2", protons:94, neutrons:150, electrons:94, oxidation_states:"+4, +3, +6, +5",
+      period:7, group:3,
+      electronegativity:"1.28", ionization_energy:"6.06 eV",
+      common_compounds:["PuO₂","PuF₆"], reactivity:"Reactive, forms oxides and hydrides easily",
+      uses:["Nuclear weapons","Nuclear reactors (MOX fuel)"], biological_role:"None (toxic, radioactive)", industries:["Defense","Nuclear energy"],
+      year_discovered:"1940", discovered_by:"Glenn T. Seaborg & team", name_origin:"Named after Pluto, following Uranus and Neptune",
+      fun_facts:["Used in Voyager spacecraft power sources"], safety:"Extremely toxic and radioactive", abundance:"Trace (synthetic mostly)"
+    },
+    {
+      number:95, symbol:"Am", name:"Americium", mass:"243", category:"Actinide",
+      state:"Solid", density:"12.0 g/cm³", melting_point:"1176 °C", boiling_point:"2607 °C", color:"Silvery white",
+      econfig:"[Rn] 5f7 7s2", protons:95, neutrons:148, electrons:95, oxidation_states:"+3, +4, +5, +6",
+      period:7, group:3,
+      electronegativity:"1.3", ionization_energy:"5.99 eV",
+      common_compounds:["AmO₂"], reactivity:"Moderate, radioactive",
+      uses:["Smoke detectors","Industrial gauges"], biological_role:"None", industries:["Safety equipment","Nuclear research"],
+      year_discovered:"1944", discovered_by:"Glenn T. Seaborg & team", name_origin:"Named after the Americas",
+      fun_facts:["Common isotope Am-241 used in smoke alarms"], safety:"Radioactive and toxic", abundance:"Synthetic, not naturally abundant"
+    },
+    {
+      number:96, symbol:"Cm", name:"Curium", mass:"247", category:"Actinide",
+      state:"Solid", density:"13.51 g/cm³", melting_point:"1340 °C", boiling_point:"3110 °C", color:"Silvery metallic",
+      econfig:"[Rn] 5f7 6d1 7s2", protons:96, neutrons:151, electrons:96, oxidation_states:"+3",
+      period:7, group:3,
+      electronegativity:"1.3", ionization_energy:"6.02 eV",
+      common_compounds:["CmO₂"], reactivity:"Radioactive, reactive metal",
+      uses:["Power source for spacecraft (RTGs)"], biological_role:"None", industries:["Space exploration"],
+      year_discovered:"1944", discovered_by:"Glenn T. Seaborg & team", name_origin:"Named in honor of Marie and Pierre Curie",
+      fun_facts:["Used in Mars rovers as power source"], safety:"Highly radioactive", abundance:"Synthetic only"
+    },
+    {
+      number:97, symbol:"Bk", name:"Berkelium", mass:"247", category:"Actinide",
+      state:"Solid", density:"14.78 g/cm³", melting_point:"986 °C", boiling_point:"2627 °C", color:"Silvery",
+      econfig:"[Rn] 5f9 7s2", protons:97, neutrons:150, electrons:97, oxidation_states:"+3, +4",
+      period:7, group:3,
+      electronegativity:"1.3", ionization_energy:"6.23 eV",
+      common_compounds:["BkO₂"], reactivity:"Radioactive",
+      uses:["Scientific research"], biological_role:"None", industries:["Nuclear research"],
+      year_discovered:"1949", discovered_by:"Lawrence Berkeley Laboratory", name_origin:"Named after Berkeley, California",
+      fun_facts:["First produced by bombarding americium with alpha particles"], safety:"Radioactive", abundance:"Synthetic only"
+    },
+    {
+      number:98, symbol:"Cf", name:"Californium", mass:"251", category:"Actinide",
+      state:"Solid", density:"15.1 g/cm³", melting_point:"900 °C", boiling_point:"1470 °C", color:"Silvery metallic",
+      econfig:"[Rn] 5f10 7s2", protons:98, neutrons:153, electrons:98, oxidation_states:"+3",
+      period:7, group:3,
+      electronegativity:"1.3", ionization_energy:"6.30 eV",
+      common_compounds:["CfO₂"], reactivity:"Radioactive",
+      uses:["Neutron sources for cancer therapy","Oil exploration"], biological_role:"None", industries:["Medicine","Energy"],
+      year_discovered:"1950", discovered_by:"Stanley Thompson & team", name_origin:"Named after California",
+      fun_facts:["One microgram can emit millions of neutrons per second"], safety:"Highly radioactive", abundance:"Synthetic"
+    },
+    {
+      number:99, symbol:"Es", name:"Einsteinium", mass:"252", category:"Actinide",
+      state:"Solid", density:"13.5 g/cm³", melting_point:"860 °C", boiling_point:"Unknown", color:"Silvery metallic",
+      econfig:"[Rn] 5f11 7s2", protons:99, neutrons:153, electrons:99, oxidation_states:"+3",
+      period:7, group:3,
+      electronegativity:"1.3", ionization_energy:"6.42 eV",
+      common_compounds:["Es₂O₃"], reactivity:"Radioactive",
+      uses:["Scientific research"], biological_role:"None", industries:["Nuclear research"],
+      year_discovered:"1952", discovered_by:"Albert Ghiorso & team", name_origin:"Named after Albert Einstein",
+      fun_facts:["Produced in hydrogen bomb tests"], safety:"Highly radioactive", abundance:"Synthetic only"
+    },
+    {
+      number:100, symbol:"Fm", name:"Fermium", mass:"257", category:"Actinide",
+      state:"Solid", density:"Unknown (~9 g/cm³ est.)", melting_point:"1527 °C", boiling_point:"Unknown", color:"Metallic",
+      econfig:"[Rn] 5f12 7s2", protons:100, neutrons:157, electrons:100, oxidation_states:"+3",
+      period:7, group:3,
+      electronegativity:"1.3", ionization_energy:"6.50 eV",
+      common_compounds:["Fm₂O₃"], reactivity:"Radioactive",
+      uses:["Scientific research"], biological_role:"None", industries:["Nuclear research"],
+      year_discovered:"1952", discovered_by:"Albert Ghiorso & team", name_origin:"Named after Enrico Fermi",
+      fun_facts:["Discovered in debris of first hydrogen bomb"], safety:"Highly radioactive", abundance:"Synthetic only"
+    },
+    {
+  number:101, symbol:"Md", name:"Mendelevium", mass:"(258)", category:"Actinide",
+  state:"Solid", density:"~10.3 g/cm³ (estimated)", melting_point:"827 °C", boiling_point:"Unknown", color:"Silvery",
+  econfig:"[Rn] 5f13 7s2", protons:101, neutrons:157, electrons:101, oxidation_states:"+2, +3",
+  period:7, group:"Actinide",
+  electronegativity:"1.3 (estimated)", ionization_energy:"6.58 eV",
+  common_compounds:["MdCl3","MdOCl"], reactivity:"Radioactive; mostly +3",
+  uses:["Purely research purposes"], biological_role:"None (radioactive)", industries:["Nuclear science"],
+  year_discovered:"1955", discovered_by:"Albert Ghiorso et al. (Berkeley Lab)", name_origin:"Named after Dmitri Mendeleev",
+  fun_facts:["First element named after a living person"], safety:"Highly radioactive, lab use only", abundance:"Synthetic, not found in nature"
+},
+{
+  number:102, symbol:"No", name:"Nobelium", mass:"(259)", category:"Actinide",
+  state:"Solid", density:"~9.9 g/cm³ (estimated)", melting_point:"827 °C", boiling_point:"Unknown", color:"Silvery",
+  econfig:"[Rn] 5f14 7s2", protons:102, neutrons:157, electrons:102, oxidation_states:"+2, +3",
+  period:7, group:"Actinide",
+  electronegativity:"1.3 (estimated)", ionization_energy:"6.65 eV",
+  common_compounds:["NoCl2","NoCl3"], reactivity:"Mostly forms +2 oxidation state",
+  uses:["Research only"], biological_role:"None", industries:["Nuclear research"],
+  year_discovered:"1958", discovered_by:"Joint Institute for Nuclear Research, Dubna (USSR)", name_origin:"Named after Alfred Nobel",
+  fun_facts:["Prefers +2 oxidation unlike other actinides"], safety:"Radioactive, short-lived isotopes", abundance:"Synthetic only"
+},
+{
+  number:103, symbol:"Lr", name:"Lawrencium", mass:"(262)", category:"Actinide",
+  state:"Solid", density:"~15.6 g/cm³ (estimated)", melting_point:"1600 °C (estimated)", boiling_point:"Unknown", color:"Silvery",
+  econfig:"[Rn] 5f14 7s2 7p1", protons:103, neutrons:159, electrons:103, oxidation_states:"+3",
+  period:7, group:3,
+  electronegativity:"1.3 (estimated)", ionization_energy:"4.9 eV",
+  common_compounds:["LrCl3"], reactivity:"Similar to actinides, +3 oxidation",
+  uses:["Research only"], biological_role:"None", industries:["Nuclear physics"],
+  year_discovered:"1961", discovered_by:"Albert Ghiorso et al. (Berkeley Lab)", name_origin:"Named after Ernest Lawrence",
+  fun_facts:["Marks the end of the actinide series"], safety:"Radioactive", abundance:"Synthetic only"
+},
+{
+  number:104, symbol:"Rf", name:"Rutherfordium", mass:"(267)", category:"Transition Metal",
+  state:"Solid", density:"~23.2 g/cm³ (estimated)", melting_point:"2400 °C (estimated)", boiling_point:"5800 °C (estimated)", color:"Unknown",
+  econfig:"[Rn] 5f14 6d2 7s2", protons:104, neutrons:163, electrons:104, oxidation_states:"+4",
+  period:7, group:4,
+  electronegativity:"1.3 (estimated)", ionization_energy:"6.0 eV",
+  common_compounds:["RfCl4"], reactivity:"Predicted to behave like Hafnium",
+  uses:["Research only"], biological_role:"None", industries:["Nuclear science"],
+  year_discovered:"1964", discovered_by:"Joint Institute for Nuclear Research, Dubna", name_origin:"Named after Ernest Rutherford",
+  fun_facts:["First of the transactinides"], safety:"Highly radioactive", abundance:"Synthetic"
+},
+{
+  number:105, symbol:"Db", name:"Dubnium", mass:"(268)", category:"Transition Metal",
+  state:"Solid", density:"~29.3 g/cm³ (estimated)", melting_point:"Unknown", boiling_point:"Unknown", color:"Unknown",
+  econfig:"[Rn] 5f14 6d3 7s2", protons:105, neutrons:163, electrons:105, oxidation_states:"+5",
+  period:7, group:5,
+  electronegativity:"1.3 (estimated)", ionization_energy:"6.8 eV",
+  common_compounds:["DbCl5"], reactivity:"Predicted similar to Tantalum",
+  uses:["Research only"], biological_role:"None", industries:["Nuclear science"],
+  year_discovered:"1967", discovered_by:"Joint Institute for Nuclear Research", name_origin:"Named after Dubna, Russia",
+  fun_facts:["Properties studied atom by atom"], safety:"Radioactive", abundance:"Synthetic only"
+},
+{
+  number:106, symbol:"Sg", name:"Seaborgium", mass:"(271)", category:"Transition Metal",
+  state:"Solid", density:"~35.0 g/cm³ (estimated)", melting_point:"Unknown", boiling_point:"Unknown", color:"Unknown",
+  econfig:"[Rn] 5f14 6d4 7s2", protons:106, neutrons:165, electrons:106, oxidation_states:"+6",
+  period:7, group:6,
+  electronegativity:"1.3 (estimated)", ionization_energy:"8.6 eV",
+  common_compounds:["SgCl6"], reactivity:"Predicted similar to Tungsten",
+  uses:["Research only"], biological_role:"None", industries:["Nuclear research"],
+  year_discovered:"1974", discovered_by:"Albert Ghiorso et al. (LBL)", name_origin:"Named after Glenn Seaborg",
+  fun_facts:["First element named after a living scientist (later Mendelevium also)"], safety:"Highly radioactive", abundance:"Synthetic only"
+},
+{
+  number:107, symbol:"Bh", name:"Bohrium", mass:"(270)", category:"Transition Metal",
+  state:"Solid", density:"~37 g/cm³ (estimated)", melting_point:"Unknown", boiling_point:"Unknown", color:"Unknown",
+  econfig:"[Rn] 5f14 6d5 7s2", protons:107, neutrons:163, electrons:107, oxidation_states:"+7",
+  period:7, group:7,
+  electronegativity:"1.3 (estimated)", ionization_energy:"Unknown",
+  common_compounds:["BhCl7"], reactivity:"Predicted similar to Rhenium",
+  uses:["Research only"], biological_role:"None", industries:["Nuclear science"],
+  year_discovered:"1981", discovered_by:"GSI Darmstadt (Germany)", name_origin:"Named after Niels Bohr",
+  fun_facts:["Properties measured atom by atom"], safety:"Radioactive", abundance:"Synthetic only"
+},
+{
+  number:108, symbol:"Hs", name:"Hassium", mass:"(277)", category:"Transition Metal",
+  state:"Solid", density:"~41 g/cm³ (estimated)", melting_point:"Unknown", boiling_point:"Unknown", color:"Unknown",
+  econfig:"[Rn] 5f14 6d6 7s2", protons:108, neutrons:169, electrons:108, oxidation_states:"+8",
+  period:7, group:8,
+  electronegativity:"1.3 (estimated)", ionization_energy:"Unknown",
+  common_compounds:["HsO4"], reactivity:"Predicted similar to Osmium",
+  uses:["Research only"], biological_role:"None", industries:["Nuclear research"],
+  year_discovered:"1984", discovered_by:"GSI Darmstadt (Germany)", name_origin:"Named after Hessen, Germany",
+  fun_facts:["One of the densest elements predicted"], safety:"Highly radioactive", abundance:"Synthetic only"
+},
+{
+  number:109, symbol:"Mt", name:"Meitnerium", mass:"(278)", category:"Transition Metal",
+  state:"Solid", density:"~37.4 g/cm³ (estimated)", melting_point:"Unknown", boiling_point:"Unknown", color:"Unknown",
+  econfig:"[Rn] 5f14 6d7 7s2", protons:109, neutrons:169, electrons:109, oxidation_states:"+9 (predicted)",
+  period:7, group:9,
+  electronegativity:"Unknown", ionization_energy:"Unknown",
+  common_compounds:["None confirmed"], reactivity:"Predicted similar to Iridium",
+  uses:["Research only"], biological_role:"None", industries:["Nuclear physics"],
+  year_discovered:"1982", discovered_by:"GSI Darmstadt (Germany)", name_origin:"Named after Lise Meitner",
+  fun_facts:["Named to honor physicist who co-discovered nuclear fission"], safety:"Radioactive", abundance:"Synthetic only"
+},
+{
+  number:110, symbol:"Ds", name:"Darmstadtium", mass:"(281)", category:"Transition Metal",
+  state:"Solid", density:"~34.8 g/cm³ (estimated)", melting_point:"Unknown", boiling_point:"Unknown", color:"Unknown",
+  econfig:"[Rn] 5f14 6d9 7s1", protons:110, neutrons:171, electrons:110, oxidation_states:"+6 (predicted)",
+  period:7, group:10,
+  electronegativity:"Unknown", ionization_energy:"Unknown",
+  common_compounds:["None confirmed"], reactivity:"Predicted similar to Platinum",
+  uses:["Research only"], biological_role:"None", industries:["Nuclear physics"],
+  year_discovered:"1994", discovered_by:"GSI Darmstadt (Germany)", name_origin:"Named after Darmstadt, Germany",
+  fun_facts:["Extremely unstable, only few atoms produced"], safety:"Radioactive", abundance:"Synthetic only"
+},
+    {
+      number:111, symbol:"Rg", name:"Roentgenium", mass:"[282]", category:"Transition Metal",
+      state:"Synthetic", density:"~28.7 g/cm³ (predicted)", melting_point:"Unknown", boiling_point:"Unknown", color:"Unknown (likely metallic)",
+      econfig:"[Rn] 5f14 6d9 7s2", protons:111, neutrons:171, electrons:111, oxidation_states:"+1,+3 (predicted)",
+      period:7, group:11,
+      electronegativity:"Unknown", ionization_energy:"~1020 kJ/mol (predicted)",
+      common_compounds:[], reactivity:"Unknown (very short-lived)",
+      uses:["Scientific research only"], biological_role:"None", industries:["Nuclear science"],
+      year_discovered:"1994", discovered_by:"GSI Darmstadt (Germany)", name_origin:"Named after Wilhelm Röntgen",
+      fun_facts:["Extremely unstable, half-lives measured in milliseconds"], safety:"Radioactive", abundance:"Not found in nature"
+    },
+    {
+      number:112, symbol:"Cn", name:"Copernicium", mass:"[285]", category:"Transition Metal",
+      state:"Synthetic", density:"14.0 g/cm³ (predicted)", melting_point:"Unknown", boiling_point:"357 °C (predicted)", color:"Silvery",
+      econfig:"[Rn] 5f14 6d10 7s2", protons:112, neutrons:173, electrons:112, oxidation_states:"+2,+4 (predicted)",
+      period:7, group:12,
+      electronegativity:"Unknown", ionization_energy:"~1155 kJ/mol (predicted)",
+      common_compounds:[], reactivity:"Noble-metal-like behavior (predicted)",
+      uses:["Scientific research only"], biological_role:"None", industries:["Nuclear science"],
+      year_discovered:"1996", discovered_by:"GSI Darmstadt (Germany)", name_origin:"Named after Nicolaus Copernicus",
+      fun_facts:["Might be a liquid at room temperature, similar to mercury"], safety:"Radioactive", abundance:"Not found in nature"
+    },
+    {
+      number:113, symbol:"Nh", name:"Nihonium", mass:"[286]", category:"Post-Transition Metal",
+      state:"Synthetic", density:"16 g/cm³ (predicted)", melting_point:"Unknown", boiling_point:"Unknown", color:"Unknown (likely metallic)",
+      econfig:"[Rn] 5f14 6d10 7s2 7p1", protons:113, neutrons:173, electrons:113, oxidation_states:"+1,+3 (predicted)",
+      period:7, group:13,
+      electronegativity:"1.36 (predicted)", ionization_energy:"~1135 kJ/mol (predicted)",
+      common_compounds:[], reactivity:"Likely very reactive (similar to thallium)",
+      uses:["Scientific research only"], biological_role:"None", industries:["Nuclear science"],
+      year_discovered:"2003", discovered_by:"RIKEN (Japan)", name_origin:"Named after Japan (Nihon)",
+      fun_facts:["First element discovered in Asia"], safety:"Radioactive", abundance:"Not found in nature"
+    },
+    {
+      number:114, symbol:"Fl", name:"Flerovium", mass:"[289]", category:"Post-Transition Metal",
+      state:"Synthetic", density:"14 g/cm³ (predicted)", melting_point:"~200 °C (predicted)", boiling_point:"~400 °C (predicted)", color:"Unknown (metallic)",
+      econfig:"[Rn] 5f14 6d10 7s2 7p2", protons:114, neutrons:175, electrons:114, oxidation_states:"+2,+4 (predicted)",
+      period:7, group:14,
+      electronegativity:"~2.0 (predicted)", ionization_energy:"~1150 kJ/mol (predicted)",
+      common_compounds:[], reactivity:"Possibly inert (like noble gases) due to relativistic effects",
+      uses:["Scientific research only"], biological_role:"None", industries:["Nuclear science"],
+      year_discovered:"1999", discovered_by:"Joint Institute for Nuclear Research (Russia)", name_origin:"Named after Flerov Laboratory of Nuclear Reactions",
+      fun_facts:["Predicted to show unusual noble-gas-like properties"], safety:"Radioactive", abundance:"Not found in nature"
+    },
+    {
+      number:115, symbol:"Mc", name:"Moscovium", mass:"[290]", category:"Post-Transition Metal",
+      state:"Synthetic", density:"13.5 g/cm³ (predicted)", melting_point:"~400 °C (predicted)", boiling_point:"~1100 °C (predicted)", color:"Unknown",
+      econfig:"[Rn] 5f14 6d10 7s2 7p3", protons:115, neutrons:175, electrons:115, oxidation_states:"+1,+3 (predicted)",
+      period:7, group:15,
+      electronegativity:"1.3 (predicted)", ionization_energy:"~538 kJ/mol (predicted)",
+      common_compounds:[], reactivity:"Likely reactive (similar to bismuth)",
+      uses:["Scientific research only"], biological_role:"None", industries:["Nuclear science"],
+      year_discovered:"2003", discovered_by:"Joint Institute for Nuclear Research (Russia) & Lawrence Livermore National Laboratory (USA)", name_origin:"Named after Moscow region",
+      fun_facts:["Part of the 'island of stability' research"], safety:"Radioactive", abundance:"Not found in nature"
+    },
+    {
+      number:116, symbol:"Lv", name:"Livermorium", mass:"[293]", category:"Post-Transition Metal",
+      state:"Synthetic", density:"12.9 g/cm³ (predicted)", melting_point:"~300 °C (predicted)", boiling_point:"~1100 °C (predicted)", color:"Unknown",
+      econfig:"[Rn] 5f14 6d10 7s2 7p4", protons:116, neutrons:177, electrons:116, oxidation_states:"+2,+4 (predicted)",
+      period:7, group:16,
+      electronegativity:"1.3 (predicted)", ionization_energy:"~742 kJ/mol (predicted)",
+      common_compounds:[], reactivity:"Similar to polonium (likely reactive)",
+      uses:["Scientific research only"], biological_role:"None", industries:["Nuclear science"],
+      year_discovered:"2000", discovered_by:"Joint Institute for Nuclear Research (Russia)", name_origin:"Named after Lawrence Livermore National Laboratory",
+      fun_facts:["Extremely unstable, decays within milliseconds"], safety:"Radioactive", abundance:"Not found in nature"
+    },
+    {
+      number:117, symbol:"Ts", name:"Tennessine", mass:"[294]", category:"Halogen",
+      state:"Synthetic", density:"7.2 g/cm³ (predicted)", melting_point:"~350 °C (predicted)", boiling_point:"~610 °C (predicted)", color:"Unknown (likely dark)",
+      econfig:"[Rn] 5f14 6d10 7s2 7p5", protons:117, neutrons:177, electrons:117, oxidation_states:"-1,+1,+3,+5 (predicted)",
+      period:7, group:17,
+      electronegativity:"~2.2 (predicted)", ionization_energy:"~742 kJ/mol (predicted)",
+      common_compounds:[], reactivity:"Likely behaves like astatine (moderately reactive)",
+      uses:["Scientific research only"], biological_role:"None", industries:["Nuclear science"],
+      year_discovered:"2010", discovered_by:"Joint Institute for Nuclear Research (Russia) & Oak Ridge National Laboratory (USA)", name_origin:"Named after Tennessee, USA",
+      fun_facts:["Second heaviest known halogen"], safety:"Radioactive", abundance:"Not found in nature"
+    },
+    {
+      number:118, symbol:"Og", name:"Oganesson", mass:"[294]", category:"Noble Gas",
+      state:"Synthetic", density:"4.9 g/cm³ (predicted)", melting_point:"Unknown", boiling_point:"~350 °C (predicted)", color:"Unknown (likely colorless gas, possibly solid at STP)",
+      econfig:"[Rn] 5f14 6d10 7s2 7p6", protons:118, neutrons:176, electrons:118, oxidation_states:"0,+2 (predicted)",
+      period:7, group:18,
+      electronegativity:"Unknown (~2.2 predicted)", ionization_energy:"~860 kJ/mol (predicted)",
+      common_compounds:[], reactivity:"Predicted to be reactive (unlike other noble gases)",
+      uses:["Scientific research only"], biological_role:"None", industries:["Nuclear science"],
+      year_discovered:"2002", discovered_by:"Joint Institute for Nuclear Research (Russia)", name_origin:"Named after Yuri Oganessian (physicist)",
+      fun_facts:["Heaviest element currently known"], safety:"Radioactive", abundance:"Not found in nature"
+    }
+
+  ]; // end of dataset (1-20). Ask me to continue and I will append more elements.
+
+  // ----------------------------
+  // UI & Logic
+  // ----------------------------
+  const lookupBtn = document.getElementById('lookup');
+  const randomBtn = document.getElementById('random');
+  const resetBtn = document.getElementById('reset');
+  const atomicInput = document.getElementById('atomicNumber');
+
+  const emptyEl = document.getElementById('empty');
+  const profileEl = document.getElementById('profile');
+
+  // mapping DOM fields
+  const set = (id, txt) => { const el = document.getElementById(id); if(el) el.textContent = txt ?? '—'; };
+
+  function showElement(el){
+    emptyEl.style.display = 'none';
+    profileEl.style.display = 'block';
+    set('p-symbol', el.symbol);
+    set('p-name', `${el.name}`);
+    set('p-category', el.category ?? '');
+    set('p-number', `Atomic #: ${el.number} • Atomic mass: ${el.mass}`);
+    set('p-period', el.period ?? '—');
+    set('p-group', el.group ?? '—');
+
+    // Basic Identification
+    set('p-name-2', el.name);
+    set('p-symbol-2', el.symbol);
+    set('p-number-2', el.number);
+    set('p-mass', el.mass);
+    set('p-cat', el.category);
+
+    // Physical
+    set('p-state', el.state ?? '—');
+    set('p-density', el.density ?? '—');
+    set('p-mp', el.melting_point ?? '—');
+    set('p-bp', el.boiling_point ?? '—');
+    set('p-color', el.color ?? '—');
+
+    // Atomic structure
+    set('p-ecfg', el.econfig ?? '—');
+    set('p-protons', el.protons ?? '—');
+    set('p-neutrons', el.neutrons ?? '—');
+    set('p-electrons', el.electrons ?? '—');
+    set('p-ox', el.oxidation_states ?? '—');
+
+    // Chemical
+    set('p-en', el.electronegativity ?? '—');
+    set('p-ion', el.ionization_energy ?? '—');
+    set('p-comp', (el.common_compounds && el.common_compounds.join(', ')) || '—');
+    set('p-react', el.reactivity ?? '—');
+
+    // Uses
+    set('p-uses', (el.uses && el.uses.join(', ')) || '—');
+    set('p-bio', el.biological_role ?? '—');
+    set('p-ind', (el.industries && el.industries.join(', ')) || '—');
+
+    // History
+    set('p-year', el.year_discovered ?? el.year ?? '—');
+    set('p-by', el.discovered_by ?? '—');
+    set('p-origin', el.name_origin ?? '—');
+
+    // Fun & safety
+    set('p-fun', (el.fun_facts && el.fun_facts.join(' • ')) || '—');
+    set('p-safety', el.safety ?? '—');
+    set('p-abund', el.abundance ?? '—');
+
+    // JSON preview
+    const pretty = JSON.stringify(el, null, 2);
+    document.getElementById('p-json').textContent = pretty;
+  }
+
+  function findElement(){
+    const n = parseInt(atomicInput.value, 10);
+    if (!n || n < 1 || n > 118){ alert('Enter a valid atomic number between 1 and 118.'); return; }
+    const el = elements.find(x=>x.number===n);
+    if (!el){ alert('Element not yet in the dataset. Ask me to add it (I can append more entries).'); return; }
+    showElement(el);
+  }
+
+  lookupBtn.addEventListener('click', findElement);
+  atomicInput.addEventListener('keydown',(e)=>{ if(e.key==='Enter') findElement(); });
+
+  randomBtn.addEventListener('click', ()=>{
+    const idx = Math.floor(Math.random()*elements.length);
+    const el = elements[idx];
+    atomicInput.value = el.number;
+    showElement(el);
+  });
+
+  resetBtn.addEventListener('click', ()=>{
+    atomicInput.value = '';
+    profileEl.style.display = 'none';
+    emptyEl.style.display = 'block';
+  });
+
+  // copy profile
+  document.getElementById('copyBtn').addEventListener('click', ()=>{
+    const text = document.getElementById('p-json').textContent;
+    if (!text) return alert('No profile to copy.');
+    navigator.clipboard?.writeText(text).then(()=> alert('Profile JSON copied to clipboard.'), ()=> alert('Copy failed.'));
+  });
+
+  // download JSON
+  document.getElementById('downloadBtn').addEventListener('click', ()=>{
+    const n = parseInt(atomicInput.value,10);
+    if (!n){ alert('Enter atomic number to download its JSON.'); return; }
+    const el = elements.find(x=>x.number===n);
+    if (!el){ alert('Element not in dataset.'); return; }
+    const blob = new Blob([JSON.stringify(el,null,2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = `element-${n}-${el.symbol}.json`; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  });
+
+  // expose function to append more elements programmatically (developer)
+  window.appendElements = function(list){
+    if (!Array.isArray(list)) return;
+    list.forEach(it => {
+      if (!elements.find(e=>e.number===it.number)) elements.push(it);
+    });
+    document.getElementById('datasetNote').textContent = `Currently: detailed entries for elements 1–118${elements.length}.`;
+    alert('Appended ' + list.length + ' elements. Total detailed elements: ' + elements.length);
+  };
+
+  // accessibility: initial state
+  document.addEventListener('DOMContentLoaded', ()=>{ /* nothing */ });
+</script>
+</body>
+</html>
